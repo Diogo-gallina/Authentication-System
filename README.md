@@ -1,73 +1,39 @@
-<p align="center">
-  <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="200" alt="Nest Logo" /></a>
-</p>
+**Requisitos Funcionais:**
 
-[circleci-image]: https://img.shields.io/circleci/build/github/nestjs/nest/master?token=abc123def456
-[circleci-url]: https://circleci.com/gh/nestjs/nest
+- [ ] O sistema deve permitir que os usuários se cadastrem fornecendo nome, e-mail e uma senha.
+- [ ] O sistema deve permitir que os usuários visualizem seu perfil, incluindo informações pessoais.
+- [ ] O sistema deve permitir que os usuários excluam sua conta.
+- [ ] O sistema deve permitir que os usuários atualizem sua senha. **// Diferencial**
+- [ ] O sistema deve mandar um e-mail, ao usuário validando o cadastro
+- [ ] O sistema deve permitir que os usuários façam login utilizando seu e-mail e senha cadastrados.
+- O sistema deve permitir que os usuários façam login, gerando um token de autenticação e um refresh token;
+- [ ] O sistema deve permitir que os usuários autenticados permaneçam on-line sem precisar deslogar
+- [ ] O sistema deve permitir que o usuário faça login apenas com autenticação de dois fatores via sms ou e-mail.
 
-  <p align="center">A progressive <a href="http://nodejs.org" target="_blank">Node.js</a> framework for building efficient and scalable server-side applications.</p>
-    <p align="center">
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/v/@nestjs/core.svg" alt="NPM Version" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/l/@nestjs/core.svg" alt="Package License" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/dm/@nestjs/common.svg" alt="NPM Downloads" /></a>
-<a href="https://circleci.com/gh/nestjs/nest" target="_blank"><img src="https://img.shields.io/circleci/build/github/nestjs/nest/master" alt="CircleCI" /></a>
-<a href="https://coveralls.io/github/nestjs/nest?branch=master" target="_blank"><img src="https://coveralls.io/repos/github/nestjs/nest/badge.svg?branch=master#9" alt="Coverage" /></a>
-<a href="https://discord.gg/G7Qnnhy" target="_blank"><img src="https://img.shields.io/badge/discord-online-brightgreen.svg" alt="Discord"/></a>
-<a href="https://opencollective.com/nest#backer" target="_blank"><img src="https://opencollective.com/nest/backers/badge.svg" alt="Backers on Open Collective" /></a>
-<a href="https://opencollective.com/nest#sponsor" target="_blank"><img src="https://opencollective.com/nest/sponsors/badge.svg" alt="Sponsors on Open Collective" /></a>
-  <a href="https://paypal.me/kamilmysliwiec" target="_blank"><img src="https://img.shields.io/badge/Donate-PayPal-ff3f59.svg"/></a>
-    <a href="https://opencollective.com/nest#sponsor"  target="_blank"><img src="https://img.shields.io/badge/Support%20us-Open%20Collective-41B883.svg" alt="Support us"></a>
-  <a href="https://twitter.com/nestframework" target="_blank"><img src="https://img.shields.io/twitter/follow/nestframework.svg?style=social&label=Follow"></a>
-</p>
-  <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
-  [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
+**Regras de Negócio:**
 
-## Description
+// Na autenticação, só é necessário um erro.
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
+- [ ] Cada usuário deve ter um endereço de e-mail único para se cadastrar no sistema.
+- [ ] As senhas dos usuários devem ser armazenadas de forma segura, utilizando técnicas de criptografia.
+- [ ] As senhas devem estar num padrão alfanumérico, min: 8 max: 32.
+- [ ]  Deve ser validada a existência do e-mail do usuário.
+- [ ] Ao cadastrar o e-mail, deve validar a formatação do email “example@.com”.
+- [###] Os usuários autenticados devem ter permissão para acessar e atualizar apenas seu próprio perfil.
+- [ ] A autenticação de dois fatores deve ser via sms ou e-mail.
+- [ ] O sistema deve projeteger rotas específicas, por exemplo: acesso apenas para usuários autenticados.
+- [ ] A cada 5 min, deve ser expirado o token do usuário.
+- [ ] Ápos a expiração, deve ser gerado um novo token “refresh-token”
+- [ ] O refresh token deve ser utilizado para renovar o token de autenticação quando este expirar;
+- [ ] O sistema deve verificar a validade dos tokens e garantir a segurança das informações;
+- [ ] A rota de login gerará um token
 
-## Installation
+**Requisitos Não Funcionais:**
 
-```bash
-$ npm install
-```
-
-## Running the app
-
-```bash
-# development
-$ npm run start
-
-# watch mode
-$ npm run start:dev
-
-# production mode
-$ npm run start:prod
-```
-
-## Test
-
-```bash
-# unit tests
-$ npm run test
-
-# e2e tests
-$ npm run test:e2e
-
-# test coverage
-$ npm run test:cov
-```
-
-## Support
-
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
-
-## Stay in touch
-
-- Author - [Kamil Myśliwiec](https://kamilmysliwiec.com)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
-
-## License
-
-Nest is [MIT licensed](LICENSE).
+- [ ] O sistema deve ser desenvolvido utilizando o framework Nest.js e a linguagem de programação TypeScript.
+- [ ] O sistema deve ser implementado seguindo os princípios da arquitetura RESTful.
+- [ ] O sistema deve ser seguro, protegendo as informações pessoais dos usuários.
+- [ ] O sistema deve ser testável, facilitando a escrita e execução de testes automatizados para garantir a qualidade do código.
+- [ ] O sistema deve ter uma documentação clara e abrangente utilizando Swagger, incluindo instruções de instalação, configuração e uso das APIs disponíveis.
+- [ ] O sistema deve ser integrado com serviços de terceiros para autenticação de e-mails, armazenamento de arquivos, etc., quando necessário.
+- [ ] O sistema deve persistir os dados do usuário utilizando PostgreSQL
