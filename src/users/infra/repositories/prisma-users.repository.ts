@@ -2,8 +2,11 @@ import { Prisma } from '@prisma/client';
 
 import { prisma } from '@/shared/infra/database/prisma';
 import { IUsersRepository } from '@/users/interfaces';
+import { Injectable } from '@nestjs/common';
+import { GetResult } from '@prisma/client/runtime/library';
 
-export class PrismaUsersRepository extends IUsersRepository {
+@Injectable()
+export class PrismaUsersRepository implements IUsersRepository {
   async findByEmail(email: string) {
     const user = await prisma.user.findUnique({
       where: {
@@ -20,5 +23,9 @@ export class PrismaUsersRepository extends IUsersRepository {
     });
 
     return user;
+  }
+
+  getUserById(id: string) {
+    const user = 
   }
 }

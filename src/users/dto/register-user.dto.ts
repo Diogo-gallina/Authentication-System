@@ -6,11 +6,12 @@ import {
   MinLength,
   Validate,
   Matches,
+  IsInt,
 } from 'class-validator';
 import { TwoWordNameValidator } from '@/shared/utils';
 
 export class RegisterUserDto {
-  @IsString()
+  @IsInt()
   @IsNotEmpty({ message: 'I name field cannot be empty' })
   @MinLength(6, { message: 'Name is too short' })
   @MaxLength(64, { message: 'Name is too long ' })

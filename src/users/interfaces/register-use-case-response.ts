@@ -1,5 +1,5 @@
 import { User } from '@prisma/client';
 
-export abstract class IRegisterUseCaseResponse {
+export interface IRegisterUseCaseResponse {
   user: User;
 }

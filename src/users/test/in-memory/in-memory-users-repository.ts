@@ -2,7 +2,7 @@ import { Prisma, User } from '@prisma/client';
 
 import { IUsersRepository } from '@/users/interfaces';
 
-export class InMemoryUsersRepository extends IUsersRepository {
+export class InMemoryUsersRepository implements IUsersRepository {
   public items: User[] = [];
 
   async findByEmail(email: string) {

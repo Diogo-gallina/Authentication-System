@@ -14,7 +14,7 @@
 
 // Na autenticação, só é necessário um erro.
 
-- [X] Um usuário não pode se cadastrar com um email já existente.
+- [x] Um usuário não pode se cadastrar com um email já existente.
 - [ ] Deve ser validada a existência do e-mail do usuário.
 - [X] O nome do usuário deve ter no minímo duas palavras
 - [X] O nome do usuário de ter no minimo 6 caracteres e no máximo 64

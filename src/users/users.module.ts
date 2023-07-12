@@ -1,16 +1,17 @@
 import { Module } from '@nestjs/common';
 
 import { RegisterUseCase } from './use-cases/register-user/register-user';
-import { IRegisterUser } from './interfaces';
 import { UserController } from '@/shared/infra/http/controllers/users.controller';
+import { PrismaUsersRepository } from './infra/repositories/prisma-users.repository';
+import { IUsersRepository } from '@/users/interfaces';
 
 @Module({
   controllers: [UserController],
   providers: [
     RegisterUseCase,
     {
-      provide: IRegisterUser,
-      useClass: RegisterUseCase,
+      provide: IUsersRepository,
+      useClass: PrismaUsersRepository,
     },
   ],
 })
