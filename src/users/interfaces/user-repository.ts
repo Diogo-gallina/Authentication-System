@@ -1,7 +1,6 @@
-import { User } from '@prisma/client';
+import { Prisma, User } from '@prisma/client';
 
-import { IRegisterUser } from './register-user';
-
-export abstract class IUserRepository {
-  abstract create(data: IRegisterUser): Promise<User>;
+export abstract class IUsersRepository {
+  abstract create(data: Prisma.UserCreateInput): Promise<User>;
+  abstract findByEmail(email: string): Promise<User | null>;
 }
