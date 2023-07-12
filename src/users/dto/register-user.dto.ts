@@ -5,6 +5,7 @@ import {
   MaxLength,
   MinLength,
   Validate,
+  Matches,
 } from 'class-validator';
 import { TwoWordNameValidator } from '@/shared/utils';
 
@@ -13,7 +14,9 @@ export class RegisterUserDto {
   @IsNotEmpty({ message: 'I name field cannot be empty' })
   @MinLength(6, { message: 'Name is too short' })
   @MaxLength(64, { message: 'Name is too long ' })
-  @Validate( TwoWordNameValidator, { message: 'Name must be at least two words.' })
+  @Validate(TwoWordNameValidator, {
+    message: 'Name must be at least two words.',
+  })
   name: string;
 
   @IsEmail({}, { message: 'The e-mail is invalid.' })
@@ -26,5 +29,9 @@ export class RegisterUserDto {
   @IsNotEmpty({ message: 'I password field cannot be empty' })
   @MinLength(8, { message: 'Password is too short' })
   @MaxLength(32, { message: 'Password is too long ' })
+  @Matches(/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*\W)(?!.*\s).*$/, {
+    message:
+      'Password must have at least 8 characters, one uppercase letter, one lowercase letter, one number, and one special character',
+  })
   password: string;
 }
