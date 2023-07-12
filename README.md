@@ -1,6 +1,6 @@
 **Requisitos Funcionais:**
 
-- [ ] O sistema deve permitir que os usuários se cadastrem fornecendo nome, e-mail e uma senha.
+- [X] O sistema deve permitir que os usuários se cadastrem fornecendo nome, e-mail e uma senha.
 - [ ] O sistema deve permitir que os usuários visualizem seu perfil, incluindo informações pessoais.
 - [ ] O sistema deve permitir que os usuários excluam sua conta.
 - [ ] O sistema deve permitir que os usuários atualizem sua senha. **// Diferencial**
@@ -16,7 +16,10 @@
 
 - [X] Um usuário não pode se cadastrar com um email já existente.
 - [ ] Deve ser validada a existência do e-mail do usuário.
-- [ ] Ao cadastrar o e-mail, deve validar a formatação do email “example@.com”.
+- [X] O nome do usuário deve ter no minímo duas palavras
+- [X] O nome do usuário de ter no minimo 6 caracteres e no máximo 64
+- [X] Ao cadastrar o e-mail, deve validar a formatação do email “example@.com”.
+- [ ] O email deve ter no minimo 8 caracteres e no maximo 2
 - [X] As senhas dos usuários devem ser armazenadas de forma segura, utilizando técnicas de criptografia.
 - [ ] As senhas devem estar num padrão alfanumérico, min: 8 max: 32.
 - [###] Os usuários autenticados devem ter permissão para acessar e atualizar apenas seu próprio perfil.
