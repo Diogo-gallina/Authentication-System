@@ -22,20 +22,17 @@ export class UpdatePasswordUseCase {
 
     const comparePassword = compare(currentPassword, user.password_hash);
 
-    if (!comparePassword) {
-      throw new Error(INCORRECT_CURRENT_PASSWORD);
-    }
+    if (!comparePassword) throw new Error(INCORRECT_CURRENT_PASSWORD);
 
-    if (newPassword !== confirmNewPassword) {
+    if (newPassword !== confirmNewPassword)
       throw new Error(CONFIRM_PASSWORD_IS_DIFERENT_NEW_PASSWORD);
-    }
 
     const passwordHash = await hash(newPassword, 6);
 
     await this.usersReository.updatePassword({
       id,
       currentPassword,
-      newPassword: passwordHash,
+      newPassword,
       confirmNewPassword,
     });
   }
