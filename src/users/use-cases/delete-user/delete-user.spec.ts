@@ -18,8 +18,10 @@ describe('Delete Use Case', () => {
       password_hash: '123456',
     });
 
-    const searchingForId = await sut.execute({ id: user.id });
+    await sut.execute({ id: user.id });
 
-    expect(searchingForId).toBe(user);
+    const searchForId = await usersRepository.findById(user.id);
+
+    expect(searchForId).toBe(null);
   });
 });
