@@ -11,7 +11,7 @@ describe('Delete Use Case', () => {
     sut = new DeleteUserUseCase(usersRepository);
   });
 
-  it('should be able to find a user by id', async () => {
+  it('should be able to delete a user', async () => {
     const user = await usersRepository.create({
       name: 'Leandro Diass',
       email: 'leandrddo@test.com',

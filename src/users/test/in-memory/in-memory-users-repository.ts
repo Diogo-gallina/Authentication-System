@@ -1,7 +1,6 @@
 import { Prisma, User } from '@prisma/client';
 
-import { IUsersRepository } from '@/users/interfaces';
-import { IUpdatePassword } from '@/users/interfaces/update-password';
+import { IUsersRepository, IValidateUpdatePassword } from '@/users/interfaces';
 
 export class InMemoryUsersRepository implements IUsersRepository {
   public items: User[] = [];
@@ -40,8 +39,14 @@ export class InMemoryUsersRepository implements IUsersRepository {
     return user;
   }
 
-  updatePassword(data: IUpdatePassword): Promise<void> {
-    throw new Error('Method not implemented.');
+  async updatePassword(data: IValidateUpdatePassword): Promise<void> {
+    const user = this.items.find((item) => item.id === data.id);
+
+    if (user) {
+      user.password_hash = data.newPassword;
+    } else {
+      throw new Error(`User with id ${data.id} not found.`);
+    }
   }
 
   async deleteUser(id: string) {

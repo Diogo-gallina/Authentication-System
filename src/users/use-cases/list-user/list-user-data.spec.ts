@@ -11,7 +11,7 @@ describe('List Use Case', () => {
     sut = new ListUsersUseCase(usersRepository);
   });
 
-  it('should be able to find a user by id', async () => {
+  it('should be able to return a user by id', async () => {
     const user = await usersRepository.create({
       name: 'Leandro Diass',
       email: 'leandrddo@test.com',

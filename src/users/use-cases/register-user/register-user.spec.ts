@@ -12,8 +12,6 @@ describe('Register Use Case', () => {
     sut = new RegisterUseCase(usersRepository);
   });
 
-  //   afterEach(() => {});
-
   it('should be able to regiter', async () => {
     const { user } = await sut.execute({
       name: 'Diogo Dias',
