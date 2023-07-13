@@ -1,7 +1,6 @@
 import { Prisma, User } from '@prisma/client';
 
 import { IUsersRepository } from '@/users/interfaces';
-import { GetResult } from '@prisma/client/runtime/library';
 
 export class InMemoryUsersRepository implements IUsersRepository {
   public items: User[] = [];
