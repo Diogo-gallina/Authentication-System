@@ -3,6 +3,7 @@ import { Prisma } from '@prisma/client';
 import { prisma } from '@/shared/infra/database/prisma';
 import { IUsersRepository } from '@/users/interfaces';
 import { Injectable } from '@nestjs/common';
+import { GetResult } from '@prisma/client/runtime/library';
 
 @Injectable()
 export class PrismaUsersRepository implements IUsersRepository {
@@ -30,6 +31,12 @@ export class PrismaUsersRepository implements IUsersRepository {
         id,
       },
     });
+
+    return user;
+  }
+
+  listUser(id: string) {
+    const user = this.findById(id);
 
     return user;
   }
