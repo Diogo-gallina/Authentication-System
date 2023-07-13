@@ -18,7 +18,7 @@ describe('List Use Case', () => {
       password_hash: '123456',
     });
 
-    const searchForId = await sut.execute({ id: user.id });
+    const searchForId = await sut.execute(user.id);
 
     expect(searchForId).toBe(user);
   });

@@ -1,6 +1,7 @@
 import { Prisma, User } from '@prisma/client';
 
 import { IUsersRepository } from '@/users/interfaces';
+import { IUpdatePassword } from '@/users/interfaces/update-password';
 
 export class InMemoryUsersRepository implements IUsersRepository {
   public items: User[] = [];
@@ -37,6 +38,10 @@ export class InMemoryUsersRepository implements IUsersRepository {
     }
 
     return user;
+  }
+
+  updatePassword(data: IUpdatePassword): Promise<void> {
+    throw new Error('Method not implemented.');
   }
 
   async deleteUser(id: string) {

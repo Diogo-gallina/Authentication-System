@@ -18,7 +18,7 @@ describe('Delete Use Case', () => {
       password_hash: '123456',
     });
 
-    await sut.execute({ id: user.id });
+    await sut.execute(user.id);
 
     const searchForId = await usersRepository.findById(user.id);
 
