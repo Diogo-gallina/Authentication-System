@@ -41,8 +41,11 @@ export class InMemoryUsersRepository implements IUsersRepository {
   }
 
   async deleteUser(id: string) {
-    const user = this.findById(id);
+    const user = await this.findById(id);
 
-    this.items.pop();
+    if (user) {
+      const index = this.items.indexOf(user);
+      this.items.splice(index, 1);
+    }
   }
 }

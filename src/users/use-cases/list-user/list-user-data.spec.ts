@@ -4,24 +4,22 @@ import { InMemoryUsersRepository } from '@/users/test/in-memory/in-memory-users-
 
 describe('List Use Case', () => {
   let usersRepository: IUsersRepository;
-  let listUserUseCase: ListUsersUseCase;
+  let sut: ListUsersUseCase;
+
   beforeEach(() => {
     usersRepository = new InMemoryUsersRepository();
-    listUserUseCase = new ListUsersUseCase(usersRepository);
+    sut = new ListUsersUseCase(usersRepository);
   });
-
-  //   afterEach(() => {});
 
   it('should be able to find a user by id', async () => {
     const user = await usersRepository.create({
-      name: 'Leandro Dias',
-      email: 'leandro@test.com',
+      name: 'Leandro Diass',
+      email: 'leandrddo@test.com',
       password_hash: '123456',
     });
 
-    const searchingForId = await listUserUseCase.execute(user);
+    const searchingForId = await sut.execute({ id: user.id });
 
-    expect(searchingForId).toEqual(user);
+    expect(searchingForId).toBe(user);
   });
-
 });

@@ -6,16 +6,16 @@ import { InMemoryUsersRepository } from '@/users/test/in-memory/in-memory-users-
 
 describe('Register Use Case', () => {
   let usersRepository: IUsersRepository;
-  let registerUseCase: RegisterUseCase;
+  let sut: RegisterUseCase;
   beforeEach(() => {
     usersRepository = new InMemoryUsersRepository();
-    registerUseCase = new RegisterUseCase(usersRepository);
+    sut = new RegisterUseCase(usersRepository);
   });
 
   //   afterEach(() => {});
 
   it('should be able to regiter', async () => {
-    const { user } = await registerUseCase.execute({
+    const { user } = await sut.execute({
       name: 'Diogo Dias',
       email: 'diogo@test.com',
       password: '123456',
@@ -25,7 +25,7 @@ describe('Register Use Case', () => {
   });
 
   it('should hash user password upon registration', async () => {
-    const { user } = await registerUseCase.execute({
+    const { user } = await sut.execute({
       name: 'Diogo Dias',
       email: 'diogo@test.com',
       password: '123456',
@@ -42,14 +42,14 @@ describe('Register Use Case', () => {
   it('should not be able to register with same email twice', async () => {
     const email = 'diogo@test.com';
 
-    await registerUseCase.execute({
+    await sut.execute({
       name: 'Diogo Dias',
       email,
       password: '123456',
     });
 
     await expect(() =>
-      registerUseCase.execute({
+      sut.execute({
         name: 'Diogo Dias',
         email,
         password: '123456',

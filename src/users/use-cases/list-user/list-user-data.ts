@@ -11,7 +11,7 @@ export class ListUsersUseCase {
   async execute({ id }: IListUser): Promise<User> {
     const user = await this.usersRepository.findById(id);
 
-    if (user) {
+    if (!user) {
       throw new Error(USER_DOES_NOT_EXIST);
     }
 
