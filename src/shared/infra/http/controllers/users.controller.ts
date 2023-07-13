@@ -1,11 +1,20 @@
-import { Controller, Post, Body, Get, Delete, Param } from '@nestjs/common';
+import {
+  Controller,
+  Post,
+  Body,
+  Get,
+  Delete,
+  Param,
+  Patch,
+} from '@nestjs/common';
 
 import {
   DeleteUserUseCase,
   ListUsersUseCase,
   RegisterUseCase,
-} from '@/users/use-cases/index';
-import { RegisterUserDto } from '@/users/dto';
+  UpdatePasswordUseCase,
+} from '@/users/use-cases';
+import { RegisterUserDto, UpdatePasswordDTO } from '@/users/dto';
 
 @Controller('user')
 export class UserController {
@@ -13,6 +22,7 @@ export class UserController {
     private registerUser: RegisterUseCase,
     private listUser: ListUsersUseCase,
     private deleteUser: DeleteUserUseCase,
+    private updatePassword: UpdatePasswordUseCase,
   ) {}
 
   @Post()
@@ -26,6 +36,11 @@ export class UserController {
   @Get('/:id')
   findOne(@Param('id') id: string) {
     return this.listUser.execute(id);
+  }
+
+  @Patch('/:id')
+  updateUser(@Param('id') id: string, @Body() data: UpdatePasswordDTO) {
+    return this.updatePassword.execute(data);
   }
 
   @Delete('/:id')

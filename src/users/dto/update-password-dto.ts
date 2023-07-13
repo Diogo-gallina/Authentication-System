@@ -7,7 +7,7 @@ import {
   MinLength,
 } from 'class-validator';
 
-export class IUpdatePassword {
+export class UpdatePasswordDTO {
   @IsString()
   @IsNotEmpty({ message: 'I id field cannot be empty' })
   @IsUUID('all', { message: 'id needs to be in the pattern uuid' })

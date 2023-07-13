@@ -5,12 +5,12 @@ import {
   CONFIRM_PASSWORD_IS_DIFERENT_NEW_PASSWORD,
   INCORRECT_CURRENT_PASSWORD,
 } from '@/shared/constants/erros';
-import { UsersRepository } from '@/users/infra/repositories';
 import { IUpdatePassword } from '@/users/interfaces/update-password';
+import { IUsersRepository } from '@/users/interfaces';
 
 @Injectable()
 export class UpdatePasswordUseCase {
-  constructor(private usersReository: UsersRepository) {}
+  constructor(private usersRepository: IUsersRepository) {}
 
   async execute({
     id,
@@ -18,7 +18,7 @@ export class UpdatePasswordUseCase {
     newPassword,
     confirmNewPassword,
   }: IUpdatePassword): Promise<void> {
-    const user = await this.usersReository.findById(id);
+    const user = await this.usersRepository.findById(id);
 
     const comparePassword = compare(currentPassword, user.password_hash);
 
@@ -27,13 +27,11 @@ export class UpdatePasswordUseCase {
     if (newPassword !== confirmNewPassword)
       throw new Error(CONFIRM_PASSWORD_IS_DIFERENT_NEW_PASSWORD);
 
-    const passwordHash = await hash(newPassword, 6);
+    await hash(newPassword, 6);
 
-    await this.usersReository.updatePassword({
+    await this.usersRepository.updatePassword({
       id,
-      currentPassword,
       newPassword,
-      confirmNewPassword,
     });
   }
 }
