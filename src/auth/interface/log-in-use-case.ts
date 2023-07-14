@@ -1,4 +1,4 @@
-export class IAuthenticateUseCase {
+export class ILoginUseCase {
   email: string;
   password: string;
 }

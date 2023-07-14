@@ -3,9 +3,8 @@
 - [X] O sistema deve permitir que os usuários se cadastrem fornecendo nome, e-mail e uma senha.
 - [X] O sistema deve permitir que os usuários visualizem seu perfil, incluindo informações pessoais.
 - [X] O sistema deve permitir que os usuários excluam sua conta.
-- [ ] O sistema deve permitir que os usuários atualizem sua senha. 
-- [ ] O sistema deve permitir que o usuário recupere sua senha.**// Diferencial**
-- [ ] O sistema deve mandar um e-mail, ao usuário validando o cadastro
+- [X] O sistema deve permitir que os usuários atualizem sua senha. 
+- [ ] O sistema deve permitir que o usuário recupere sua senha.**Diferencial**
 - [ ] O sistema deve permitir que os usuários façam login utilizando seu e-mail e senha cadastrados.
 - [ ] O sistema deve permitir que os usuários façam login, gerando um token de autenticação e um refresh token;
 - [ ] O sistema deve permitir que os usuários autenticados permaneçam on-line sem precisar deslogar.
