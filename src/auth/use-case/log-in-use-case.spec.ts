@@ -13,10 +13,12 @@ describe('Login Use Case', () => {
     sut = new LoginUseCase(usersRepository);
   });
 
+  afterEach(() => {});
+
   it('should be able to login a user', async () => {
     await usersRepository.create({
       name: 'Leandro Diass',
-      email: 'teste@test.com',
+      email: 'teste@teste.com',
       password_hash: await hash('123456', 6),
     });
 
@@ -26,5 +28,14 @@ describe('Login Use Case', () => {
     });
 
     expect(user.id).toEqual(expect.any(String));
+  });
+
+  it('should not be able to login with wrong email', async () => {
+    await expect(
+      sut.execute({
+        email: 'teste@teste.com',
+        password: '123456',
+      }),
+    ).rejects.toBeInstanceOf(Error);
   });
 });

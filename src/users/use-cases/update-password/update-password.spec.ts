@@ -20,20 +20,14 @@ describe('Update Password Use Case', () => {
       password_hash: '123456',
     });
 
-    console.log(user);
-
-    const userUpdatePassword = await sut.execute({
+    await sut.execute({
       id: user.id,
       currentPassword: user.password_hash,
       newPassword: 'abC123!@#',
       confirmNewPassword: 'abC123!@#',
     });
 
-    console.log(userUpdatePassword);
-
-    const comparePassword = await compare('abC123!@#', user.password_hash);
-
-    console.log(comparePassword);
+    await compare('abC123!@#', user.password_hash);
 
     expect(user.password_hash).toBe('abC123!@#');
   });
