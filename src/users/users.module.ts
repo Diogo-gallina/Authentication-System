@@ -1,6 +1,6 @@
 import { Module } from '@nestjs/common';
 
-import { UserController } from '@/shared/infra/http/controllers/users.controller';
+import { UserController } from '@/shared/infra/http/controllers/users-controller/users.controller';
 import { UsersRepository } from './infra/repositories/users.repository';
 import { IUsersRepository } from '@/users/interfaces';
 import {

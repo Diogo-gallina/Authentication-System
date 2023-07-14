@@ -13,8 +13,6 @@ describe('Login Use Case', () => {
     sut = new LoginUseCase(usersRepository);
   });
 
-  afterEach(() => {});
-
   it('should be able to login a user', async () => {
     await usersRepository.create({
       name: 'Leandro Diass',
