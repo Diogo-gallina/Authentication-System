@@ -38,4 +38,19 @@ describe('Login Use Case', () => {
       }),
     ).rejects.toBeInstanceOf(Error);
   });
+
+  it('should not be able to login with wrong password', async () => {
+    await usersRepository.create({
+      name: 'Leandro Diass',
+      email: 'teste@teste.com',
+      password_hash: await hash('123456', 6),
+    });
+
+    await expect(
+      sut.execute({
+        email: 'teste@teste.com',
+        password: '123abc',
+      }),
+    ).rejects.toBeInstanceOf(Error);
+  });
 });
