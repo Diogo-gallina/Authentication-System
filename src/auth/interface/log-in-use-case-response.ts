@@ -1,4 +1,5 @@
+import { User } from '@prisma/client';
+
 export class ILoginUseCaseResponse {
-  email: string;
-  password: string;
+  user: User;
 }
