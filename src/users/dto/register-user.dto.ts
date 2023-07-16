@@ -7,6 +7,7 @@ import {
   Validate,
   Matches,
 } from 'class-validator';
+
 import { TwoWordNameValidator } from '@/shared/utils';
 
 export class RegisterUserDto {
