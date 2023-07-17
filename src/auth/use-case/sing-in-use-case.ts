@@ -5,11 +5,13 @@ import { ISingInUseCase } from '../interfaces/sing-in-use-case';
 import { INVALID_CREDENTIALS_ERROR } from '@/shared/constants/erros';
 import { IAuthRepository } from '../interfaces/auth-repositoey';
 import { Injectable } from '@nestjs/common';
+import { ITokenRepository } from '@/token/interfaces';
 
 @Injectable()
 export class SingInUseCase {
   constructor(
     private authRepository: IAuthRepository,
+    private tokenRepository: ITokenRepository,
     private jwtService: JwtService,
   ) {}
 
@@ -27,9 +29,13 @@ export class SingInUseCase {
     const payload = { sub: user.id, email: user.email };
     const token = await this.jwtService.signAsync(payload);
 
-    
+    await this.tokenRepository.save({
+      token: token,
+      userId: user.id
+    })
+
     return {
-      token,
+      accessToken: token,
     };
   }
 }

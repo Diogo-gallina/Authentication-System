@@ -1,4 +1,4 @@
 export class ISaveToken {
-  toke: string;
+  token: string;
   user_id: string;
 }
