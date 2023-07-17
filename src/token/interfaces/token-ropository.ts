@@ -1,3 +1,5 @@
+import { ISaveToken } from './save-token';
+
 export abstract class ITokenRepository {
-  abstract save(token: string, user_id: string): Promise<void>;
+  abstract save(data: ISaveToken): Promise<void>;
 }
