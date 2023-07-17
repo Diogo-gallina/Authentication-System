@@ -24,6 +24,7 @@ import { UsersRepository } from '@/users/infra/repositories';
       useClass: UsersRepository,
     },
   ],
+  exports: [SingInUseCase, JwtModule],
   controllers: [AuthController],
 })
 export class AuthModule {}
