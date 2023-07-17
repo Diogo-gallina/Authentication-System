@@ -4,7 +4,6 @@ import { JwtService } from '@nestjs/jwt';
 import { UsersRepository } from '@/users/infra/repositories';
 import { ISingInUseCase } from '../interface/sing-in-use-case';
 import { INVALID_CREDENTIALS_ERROR } from '@/shared/constants/erros';
-import { ISingInUseCaseResponse } from '../interface/sing-in-use-case-response';
 
 export class SingInUseCase {
   constructor(
