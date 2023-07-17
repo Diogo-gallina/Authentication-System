@@ -5,8 +5,8 @@ import { UsersModule } from '../users/users.module';
 import { AuthController } from '@/shared/infra/http/controllers';
 import { jwtConstants } from '@/shared/constants/constants';
 import { SingInUseCase } from './use-case/sing-in-use-case';
-import { IUsersRepository } from '@/users/interfaces';
-import { UsersRepository } from '@/users/infra/repositories';
+import { IAuthRepository } from './interface/auth-repositoey';
+import { AuthRepository } from './infra/in-memory';
 
 @Module({
   imports: [
@@ -20,8 +20,8 @@ import { UsersRepository } from '@/users/infra/repositories';
   providers: [
     SingInUseCase,
     {
-      provide: IUsersRepository,
-      useClass: UsersRepository,
+      provide: IAuthRepository,
+      useClass: AuthRepository,
     },
   ],
   exports: [SingInUseCase, JwtModule],
