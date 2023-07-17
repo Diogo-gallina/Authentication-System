@@ -6,6 +6,7 @@ import {
   Delete,
   Param,
   Patch,
+  UseGuards,
 } from '@nestjs/common';
 
 import {
@@ -15,6 +16,7 @@ import {
   UpdatePasswordUseCase,
 } from '@/users/use-cases';
 import { RegisterUserDto, UpdatePasswordDTO } from '@/users/dto';
+import { AuthGuard } from '@/shared/guards/auth.guard';
 
 @Controller('user')
 export class UserController {
@@ -34,6 +36,7 @@ export class UserController {
   }
 
   @Get('/:id')
+  @UseGuards(AuthGuard)
   findOne(@Param('id') id: string) {
     return this.listUser.execute(id);
   }
