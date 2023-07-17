@@ -6,7 +6,7 @@ import {
   MinLength,
 } from 'class-validator';
 
-export class ILoginUseCase {
+export class ISingInDto {
   @IsEmail({}, { message: 'The e-mail is invalid.' })
   @IsNotEmpty({ message: 'I email field cannot be empty' })
   @MinLength(8, { message: 'Email is too short' })
