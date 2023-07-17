@@ -5,7 +5,7 @@
 - [X] O sistema deve permitir que os usuários excluam sua conta.
 - [X] O sistema deve permitir que os usuários atualizem sua senha. 
 - [ ] O sistema deve permitir que o usuário recupere sua senha.**Diferencial**
-- [ ] O sistema deve permitir que os usuários façam login utilizando seu e-mail e senha cadastrados.
+- [X] O sistema deve permitir que os usuários façam login utilizando seu e-mail e senha cadastrados.
 - [ ] O sistema deve permitir que os usuários façam login, gerando um token de autenticação e um refresh token;
 - [ ] O sistema deve permitir que os usuários autenticados permaneçam on-line sem precisar deslogar.
 - [ ] O sistema deve permitir que o usuário faça login apenas com autenticação de dois fatores via sms ou e-mail.

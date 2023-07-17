@@ -3,16 +3,18 @@ import { JwtService } from '@nestjs/jwt';
 
 import { ISingInUseCase } from '../interface/sing-in-use-case';
 import { INVALID_CREDENTIALS_ERROR } from '@/shared/constants/erros';
-import { IUsersRepository } from '@/users/interfaces';
+import { IAuthRepository } from '../interface/auth-repositoey';
+import { Injectable } from '@nestjs/common';
 
+@Injectable()
 export class SingInUseCase {
   constructor(
-    private usersRepository: IUsersRepository,
+    private authRepository: IAuthRepository,
     private jwtService: JwtService,
   ) {}
 
   async execute({ email, password }: ISingInUseCase) {
-    const user = await this.usersRepository.findByEmail(email);
+    const user = await this.authRepository.findByEmail(email);
 
     console.log(user);
 
