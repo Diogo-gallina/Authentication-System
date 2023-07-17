@@ -2,15 +2,15 @@ import { hash } from 'bcryptjs';
 
 import { IUsersRepository } from '@/users/interfaces/';
 import { InMemoryUsersRepository } from '@/users/test/in-memory/in-memory-users-repository';
-import { LoginUseCase } from './log-in-use-case';
+import { SingInUseCase } from './sing-in-use-case';
 
 describe('Login Use Case', () => {
   let usersRepository: IUsersRepository;
-  let sut: LoginUseCase;
+  let sut: SingInUseCase;
 
   beforeEach(() => {
     usersRepository = new InMemoryUsersRepository();
-    sut = new LoginUseCase(usersRepository);
+    sut = new SingInUseCase(usersRepository);
   });
 
   it('should be able to login a user', async () => {

@@ -1,17 +1,17 @@
 import { compare } from 'bcryptjs';
 
 import { UsersRepository } from '@/users/infra/repositories';
-import { ILoginUseCase } from '../interface/log-in-use-case';
+import { ISingInUseCase } from '../interface/sing-in-use-case';
 import { INVALID_CREDENTIALS_ERROR } from '@/shared/constants/erros';
-import { ILoginUseCaseResponse } from '../interface/log-in-use-case-response';
+import { ISingInUseCaseResponse } from '../interface/sing-in-use-case-response';
 
-export class LoginUseCase {
+export class SingInUseCase {
   constructor(private usersRepository: UsersRepository) {}
 
   async execute({
     email,
     password,
-  }: ILoginUseCase): Promise<ILoginUseCaseResponse> {
+  }: ISingInUseCase): Promise<ISingInUseCaseResponse> {
     const user = await this.usersRepository.findByEmail(email);
 
     if (!user) throw new Error(INVALID_CREDENTIALS_ERROR);
