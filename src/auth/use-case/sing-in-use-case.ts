@@ -25,9 +25,11 @@ export class SingInUseCase {
     if (!doesPasswordMatches) throw new Error(INVALID_CREDENTIALS_ERROR);
 
     const payload = { sub: user.id, email: user.email };
+    const token = await this.jwtService.signAsync(payload);
 
+    
     return {
-      access_token: await this.jwtService.signAsync(payload),
+      token,
     };
   }
 }
