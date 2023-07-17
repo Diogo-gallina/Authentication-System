@@ -5,7 +5,7 @@ import { UsersModule } from '../users/users.module';
 import { AuthController } from '@/shared/infra/http/controllers';
 import { jwtConstants } from '@/shared/constants/constants';
 import { SingInUseCase } from './use-case/sing-in-use-case';
-import { IAuthRepository } from './interface/auth-repositoey';
+import { IAuthRepository } from './interfaces/auth-repositoey';
 import { AuthRepository } from './infra/in-memory';
 
 @Module({

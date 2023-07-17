@@ -1,9 +1,9 @@
 import { compare } from 'bcryptjs';
 import { JwtService } from '@nestjs/jwt';
 
-import { ISingInUseCase } from '../interface/sing-in-use-case';
+import { ISingInUseCase } from '../interfaces/sing-in-use-case';
 import { INVALID_CREDENTIALS_ERROR } from '@/shared/constants/erros';
-import { IAuthRepository } from '../interface/auth-repositoey';
+import { IAuthRepository } from '../interfaces/auth-repositoey';
 import { Injectable } from '@nestjs/common';
 
 @Injectable()
