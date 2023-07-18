@@ -18,8 +18,6 @@ export class SingInUseCase {
   async execute({ email, password }: ISingInUseCase) {
     const user = await this.authRepository.findByEmail(email);
 
-    console.log(user);
-
     if (!user) throw new Error(INVALID_CREDENTIALS_ERROR);
 
     const doesPasswordMatches = await compare(password, user.password_hash);
@@ -29,7 +27,9 @@ export class SingInUseCase {
     const payload = { sub: user.id, email: user.email };
     const token = await this.jwtService.signAsync(payload);
 
-    await this.tokenRepository.save({ token: token, user_id: user.id });
+    console.log(user.id);
+
+    await this.tokenRepository.create({ token: token, user_id: user.id });
 
     return {
       accessToken: token,
