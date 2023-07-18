@@ -13,6 +13,7 @@ import { RefreshTokenUseCase } from '@/token/use-cases';
 import { IUsersRepository } from '@/users/interfaces';
 import { UsersRepository } from '@/users/infra/repositories';
 import { ValidateUserUseCase } from './use-case/validate-user-use-case/validate-user-use-case';
+import { GenerateAccessTokenUseCase } from '@/token/use-cases/generate-access-token-use-case.ts/generate-access-token-use-case';
 
 @Module({
   imports: [
@@ -27,6 +28,7 @@ import { ValidateUserUseCase } from './use-case/validate-user-use-case/validate-
     ValidateUserUseCase,
     RefreshTokenUseCase,
     SingInUseCase,
+    GenerateAccessTokenUseCase,
     {
       provide: IAuthRepository,
       useClass: AuthRepository,

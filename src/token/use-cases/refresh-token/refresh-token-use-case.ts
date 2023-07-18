@@ -1,17 +1,17 @@
 import { Injectable } from '@nestjs/common';
 
-import { INVALID_REFRESH_TOKEN } from '@/shared/constants/erros';
+import { INVALID_REFRESH_TOKEN } from '@/shared/constants/errors';
 import { ITokenRepository } from '@/token/interfaces';
 import { IUsersRepository } from '@/users/interfaces';
-import { SingInUseCase } from '@/auth/use-case/sing-in-use-case/sing-in-use-case';
 import { IRefreshToken } from '@/token/interfaces/refresh-token';
+import { GenerateAccessTokenUseCase } from '../generate-access-token-use-case.ts/generate-access-token-use-case';
 
 @Injectable()
 export class RefreshTokenUseCase {
   constructor(
     private tokenRepository: ITokenRepository,
     private usersRepository: IUsersRepository,
-    private singInUseCase: SingInUseCase,
+    private generateAccessTokenUseCase: GenerateAccessTokenUseCase,
   ) {}
 
   async execute({ refreshToken }: IRefreshToken) {
@@ -21,7 +21,7 @@ export class RefreshTokenUseCase {
 
     const user = await this.usersRepository.findById(token.user_id);
 
-    const newToken = this.singInUseCase.execute(user);
+    const newToken = this.generateAccessTokenUseCase.execute(user);
 
     return newToken;
   }

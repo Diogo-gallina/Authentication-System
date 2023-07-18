@@ -17,15 +17,11 @@ export class SingInUseCase {
 
     const refreshToken = await this.generateRefreshToken();
 
-    console.log(refreshToken);
-
     await this.tokenRepository.create({
       user_id: user.id,
       accessToken: token,
       refreshToken: refreshToken,
     });
-
-    console.log(refreshToken);
 
     return {
       accessToken: token,

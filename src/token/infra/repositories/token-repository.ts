@@ -21,7 +21,7 @@ export class TokenRepository implements ITokenRepository {
     return await this.createToken(data);
   }
 
-  private async findExistingToken(user_id: string) {
+  async findExistingToken(user_id: string) {
     return await prisma.token.findFirst({
       where: {
         user_id,
@@ -29,11 +29,7 @@ export class TokenRepository implements ITokenRepository {
     });
   }
 
-  private async updateToken(
-    id: string,
-    accessToken: string,
-    refreshToken: string,
-  ) {
+  async updateToken(id: string, accessToken: string, refreshToken: string) {
     return await prisma.token.update({
       where: {
         id,
@@ -45,16 +41,16 @@ export class TokenRepository implements ITokenRepository {
     });
   }
 
-  private async createToken(data: Prisma.TokenUncheckedCreateInput) {
+  async createToken(data: Prisma.TokenUncheckedCreateInput) {
     return await prisma.token.create({
       data,
     });
   }
 
-  private async updateAccessToken(id: string, accessToken: string) {
+  async updateAccessToken(id: string, accessToken: string) {
     return await prisma.token.update({
       where: {
-        id,
+        user_id: id,
       },
       data: {
         accessToken,

@@ -2,7 +2,7 @@ import { hash } from 'bcryptjs';
 
 import { IRegisterUser, IUsersRepository } from '@/users/interfaces';
 import { IRegisterUseCaseResponse } from '@/users/interfaces/register-use-case-response';
-import { EMAIL_ALREADY_EXISTS } from '@/shared/constants/erros';
+import { EMAIL_ALREADY_EXISTS } from '@/shared/constants/errors';
 import { Injectable } from '@nestjs/common';
 
 @Injectable()

@@ -10,10 +10,23 @@ import { UsersRepository } from '@/users/infra/repositories';
 import { SingInUseCase } from '@/auth/use-case/sing-in-use-case/sing-in-use-case';
 import { IAuthRepository } from '@/auth/interfaces/auth-repositoey';
 import { AuthRepository } from '@/auth/infra/in-memory';
+import { JwtModule } from '@nestjs/jwt';
+import { GenerateAccessTokenUseCase } from './use-cases/generate-access-token-use-case.ts/generate-access-token-use-case';
+import { UsersModule } from '@/users/users.module';
+import { jwtConstants } from '@/shared/constants/constants';
 
 @Module({
+  imports: [
+    UsersModule,
+    JwtModule.register({
+      global: true,
+      secret: jwtConstants.secret,
+      signOptions: { expiresIn: '60s' },
+    }),
+  ],
   controllers: [TokenController],
   providers: [
+    GenerateAccessTokenUseCase,
     SingInUseCase,
     RefreshTokenUseCase,
     SaveTokenUseCase,
@@ -33,6 +46,7 @@ import { AuthRepository } from '@/auth/infra/in-memory';
   exports: [
     RefreshTokenUseCase,
     SaveTokenUseCase,
+    GenerateAccessTokenUseCase,
     {
       provide: ITokenRepository,
       useClass: TokenRepository,

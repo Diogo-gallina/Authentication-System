@@ -4,7 +4,7 @@ import { compare, hash } from 'bcryptjs';
 import {
   CONFIRM_PASSWORD_IS_DIFERENT_NEW_PASSWORD,
   INCORRECT_CURRENT_PASSWORD,
-} from '@/shared/constants/erros';
+} from '@/shared/constants/errors';
 import { IUpdatePassword } from '@/users/interfaces/update-password';
 import { IUsersRepository } from '@/users/interfaces';
 

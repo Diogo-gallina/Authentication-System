@@ -2,7 +2,7 @@ import { compare } from 'bcryptjs';
 import { Injectable } from '@nestjs/common';
 
 import { IValidateUserUseCase } from '../../interfaces/validate-user-use-case';
-import { INVALID_CREDENTIALS_ERROR } from '@/shared/constants/erros';
+import { INVALID_CREDENTIALS_ERROR } from '@/shared/constants/errors';
 import { IAuthRepository } from '../../interfaces/auth-repositoey';
 
 @Injectable()

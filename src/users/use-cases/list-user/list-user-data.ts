@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { User } from '@prisma/client';
 
-import { USER_DOES_NOT_EXIST } from '@/shared/constants/erros';
+import { USER_DOES_NOT_EXIST } from '@/shared/constants/errors';
 import { IUsersRepository } from '@/users/interfaces';
 
 @Injectable()
