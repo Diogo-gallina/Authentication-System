@@ -2,7 +2,7 @@ import { Module } from '@nestjs/common';
 
 import { SaveTokenUseCase } from './use-cases/save-token-use-case/save-token-use-case';
 import { ITokenRepository } from './interfaces';
-import { TokenRpository } from './infra/repositories/token-repository';
+import { TokenRepository } from './infra/repositories/token-repository';
 import { TokenController } from '@/shared/infra/http/controllers/token-controller/token-controller';
 import { RefreshTokenUseCase } from './use-cases/refresh-token/refresh-token-use-case';
 import { IUsersRepository } from '@/users/interfaces';
@@ -19,7 +19,7 @@ import { AuthRepository } from '@/auth/infra/in-memory';
     SaveTokenUseCase,
     {
       provide: ITokenRepository,
-      useClass: TokenRpository,
+      useClass: TokenRepository,
     },
     {
       provide: IUsersRepository,
@@ -35,7 +35,7 @@ import { AuthRepository } from '@/auth/infra/in-memory';
     SaveTokenUseCase,
     {
       provide: ITokenRepository,
-      useClass: TokenRpository,
+      useClass: TokenRepository,
     },
   ],
 })

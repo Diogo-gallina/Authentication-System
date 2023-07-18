@@ -15,7 +15,9 @@ export class SingInUseCase {
     const payload = { sub: user.id, email: user.email };
     const token = await this.jwtService.signAsync(payload);
 
-    const refreshToken = await this.generateRefreshToken(user.id);
+    const refreshToken = await this.generateRefreshToken();
+
+    console.log(refreshToken);
 
     await this.tokenRepository.create({
       user_id: user.id,
@@ -23,16 +25,18 @@ export class SingInUseCase {
       refreshToken: refreshToken,
     });
 
+    console.log(refreshToken);
+
     return {
       accessToken: token,
       refreshToken,
     };
   }
 
-  private async generateRefreshToken(userId: string): Promise<string> {
-    const payload = { sub: userId };
-    const refreshToken = await this.jwtService.signAsync(payload, {
-      expiresIn: '1d',
+  private async generateRefreshToken(): Promise<string> {
+    const refreshTokenPayload = { tokenType: 'refresh' };
+    const refreshToken = await this.jwtService.signAsync(refreshTokenPayload, {
+      expiresIn: '2h',
     });
 
     return refreshToken;

@@ -5,33 +5,50 @@ import { prisma } from '@/shared/infra/database/prisma';
 import { ITokenRepository } from '@/token/interfaces';
 
 @Injectable()
-export class TokenRpository implements ITokenRepository {
+export class TokenRepository implements ITokenRepository {
   async create(data: Prisma.TokenUncheckedCreateInput) {
-    const { user_id, accessToken } = data;
+    const { user_id, accessToken, refreshToken } = data;
+    const existingToken = await this.findExistingToken(user_id);
 
-    const existingToken = await prisma.token.findFirst({
+    if (existingToken) {
+      return await this.updateToken(
+        existingToken.id,
+        accessToken,
+        refreshToken,
+      );
+    }
+
+    return await this.createToken(data);
+  }
+
+  private async findExistingToken(user_id: string) {
+    return await prisma.token.findFirst({
       where: {
         user_id,
       },
     });
+  }
 
-    if (existingToken) {
-      await prisma.token.update({
-        where: {
-          id: existingToken.id,
-        },
-        data: {
-          accessToken,
-        },
-      });
-      return existingToken;
-    }
+  private async updateToken(
+    id: string,
+    accessToken: string,
+    refreshToken: string,
+  ) {
+    return await prisma.token.update({
+      where: {
+        id,
+      },
+      data: {
+        accessToken,
+        refreshToken,
+      },
+    });
+  }
 
-    const newToken = await prisma.token.create({
+  private async createToken(data: Prisma.TokenUncheckedCreateInput) {
+    return await prisma.token.create({
       data,
     });
-
-    return newToken;
   }
 
   async findToken(token: string) {

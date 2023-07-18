@@ -8,7 +8,7 @@ import { SingInUseCase } from './use-case/sing-in-use-case/sing-in-use-case';
 import { IAuthRepository } from './interfaces/auth-repositoey';
 import { AuthRepository } from './infra/in-memory';
 import { ITokenRepository } from '@/token/interfaces';
-import { TokenRpository } from '@/token/infra/repositories/token-repository';
+import { TokenRepository } from '@/token/infra/repositories/token-repository';
 import { RefreshTokenUseCase } from '@/token/use-cases';
 import { IUsersRepository } from '@/users/interfaces';
 import { UsersRepository } from '@/users/infra/repositories';
@@ -33,7 +33,7 @@ import { ValidateUserUseCase } from './use-case/validate-user-use-case/validate-
     },
     {
       provide: ITokenRepository,
-      useClass: TokenRpository,
+      useClass: TokenRepository,
     },
     {
       provide: IUsersRepository,
