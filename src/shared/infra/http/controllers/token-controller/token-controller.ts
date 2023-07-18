@@ -1,11 +1,14 @@
-import { Body, Controller, Post } from '@nestjs/common';
+import { RefreshTokenDto } from '@/token/dto/refresh-token-dto';
+import { Body, Controller, Put } from '@nestjs/common';
 
 @Controller('token')
 export class TokenController {
-  constructor() {}
+  constructor(
 
-  @Post()
-  async login(@Body() any) {
+  ) {}
+
+  @Put()
+  async refreshToken(@Body() data: RefreshTokenDto) {
     return any;
   }
 }
