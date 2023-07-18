@@ -1,3 +1,3 @@
-export class RefreshTokenDto {
+export class IRefreshToken {
   oldToken: string;
 }
