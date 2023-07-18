@@ -30,7 +30,7 @@ export class InMemoryUsersRepository implements IUsersRepository {
   }
 
   async findById(id: string) {
-    const user = await this.items.find((item) => item.id === id);
+    const user = this.items.find((item) => item.id === id);
 
     if (!user) {
       return null;

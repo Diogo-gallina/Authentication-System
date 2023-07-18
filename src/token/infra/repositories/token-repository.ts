@@ -43,8 +43,4 @@ export class TokenRpository implements ITokenRepository {
 
     return objToken;
   }
-
-  async refrashToken(oldToken: string) {
-    const x = oldToken;
-  }
 }

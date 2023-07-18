@@ -7,9 +7,12 @@ import { jwtConstants } from '@/shared/constants/constants';
 import { SingInUseCase } from './use-case/sing-in-use-case';
 import { IAuthRepository } from './interfaces/auth-repositoey';
 import { AuthRepository } from './infra/in-memory';
-import { SaveTokenUseCase } from '@/token/use-cases/save-token-use-case.ts/save-token-use-case';
+import { SaveTokenUseCase } from '@/token/use-cases/';
 import { ITokenRepository } from '@/token/interfaces';
 import { TokenRpository } from '@/token/infra/repositories/token-repository';
+import { RefreshTokenUseCase } from '@/token/use-cases';
+import { IUsersRepository } from '@/users/interfaces';
+import { UsersRepository } from '@/users/infra/repositories';
 
 @Module({
   imports: [
@@ -21,18 +24,22 @@ import { TokenRpository } from '@/token/infra/repositories/token-repository';
     }),
   ],
   providers: [
+    RefreshTokenUseCase,
     SingInUseCase,
     {
       provide: IAuthRepository,
       useClass: AuthRepository,
     },
-    SaveTokenUseCase,
     {
       provide: ITokenRepository,
       useClass: TokenRpository,
     },
+    {
+      provide: IUsersRepository,
+      useClass: UsersRepository,
+    },
   ],
-  exports: [SingInUseCase, JwtModule],
+  exports: [SingInUseCase],
   controllers: [AuthController],
 })
 export class AuthModule {}

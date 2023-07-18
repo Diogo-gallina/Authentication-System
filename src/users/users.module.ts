@@ -22,5 +22,11 @@ import {
       useClass: UsersRepository,
     },
   ],
+  exports: [
+    {
+      provide: IUsersRepository,
+      useClass: UsersRepository,
+    },
+  ],
 })
 export class UsersModule {}
