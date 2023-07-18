@@ -9,10 +9,16 @@ export class SaveTokenUseCase {
   constructor(private tokenRepository: ITokenRepository) {}
 
   async execute({ token, userId }: ISaveToken): Promise<Token> {
-    const refreshToken = await this.tokenRepository.save({
-      token: token,
-      user_id: userId,
-    });
+    const objToken = await this.tokenRepository.findById(userId);
+
+    if (objToken) {
+      
+    } else {
+      const refreshToken = await this.tokenRepository.save({
+        token: token,
+        user_id: userId,
+      });
+    }
 
     return refreshToken;
   }

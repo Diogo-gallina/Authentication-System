@@ -1,8 +1,8 @@
 import { Injectable } from '@nestjs/common';
-import { Prisma } from '@prisma/client';
+import { Prisma, Token } from '@prisma/client';
 
 import { prisma } from '@/shared/infra/database/prisma';
-import { ITokenRepository } from '@/token/interfaces';
+import { ITokenRepository, IUpdateToken } from '@/token/interfaces';
 
 @Injectable()
 export class TokenRpository implements ITokenRepository {
@@ -12,5 +12,22 @@ export class TokenRpository implements ITokenRepository {
     });
 
     return token;
+  }
+
+  async findById(userId: string) {
+    const token = await prisma.token.findUnique({ where: { user_id: userId } });
+
+    return token;
+  }
+
+  async updateRefreshToken(data: Token) {
+    await prisma.token.update({
+      where: {
+        user_id: data.user_id,
+      },
+      data: {
+        token: data.token,
+      },
+    });
   }
 }
