@@ -6,7 +6,7 @@ import { ITokenRepository } from '@/token/interfaces';
 
 @Injectable()
 export class TokenRpository implements ITokenRepository {
-  async save(data: Prisma.TokenCreateInput) {
+  async save(data: Prisma.TokenUncheckedCreateInput) {
     const token = await prisma.token.create({
       data,
     });
