@@ -7,7 +7,7 @@ import { ITokenRepository } from '@/token/interfaces';
 @Injectable()
 export class TokenRpository implements ITokenRepository {
   async create(data: Prisma.TokenUncheckedCreateInput) {
-    const { user_id, token } = data;
+    const { user_id, accessToken } = data;
 
     const existingToken = await prisma.token.findFirst({
       where: {
@@ -21,7 +21,7 @@ export class TokenRpository implements ITokenRepository {
           id: existingToken.id,
         },
         data: {
-          token,
+          accessToken,
         },
       });
       return existingToken;
@@ -37,7 +37,7 @@ export class TokenRpository implements ITokenRepository {
   async findToken(token: string) {
     const objToken = await prisma.token.findUnique({
       where: {
-        token: token,
+        accessToken: token,
       },
     });
 

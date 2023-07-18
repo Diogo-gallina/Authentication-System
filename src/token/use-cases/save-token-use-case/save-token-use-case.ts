@@ -7,10 +7,11 @@ import { ISaveToken } from '@/token/interfaces/save-token';
 export class SaveTokenUseCase {
   constructor(private tokenRepository: ITokenRepository) {}
 
-  async execute({ token, userId }: ISaveToken): Promise<void> {
+  async execute({ token, userId, refreshToken }: ISaveToken): Promise<void> {
     await this.tokenRepository.create({
-      token: token,
+      accessToken: token,
       user_id: userId,
+      refreshToken: refreshToken,
     });
   }
 }

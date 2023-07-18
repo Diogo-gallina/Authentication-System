@@ -6,19 +6,20 @@ export class InMemoryTokenRepository implements ITokenRepository {
   public items: Token[] = [];
 
   async create(data: Token): Promise<Token> {
-    const { user_id, token } = data;
+    const { user_id, accessToken, refreshToken } = data;
 
     const existingToken = this.items.find((t) => t.user_id === user_id);
 
     if (existingToken) {
-      existingToken.token = token;
+      existingToken.accessToken = accessToken;
       return existingToken;
     }
 
     const newToken: Token = {
       id: Math.random().toString(),
       user_id,
-      token,
+      accessToken,
+      refreshToken,
       created_at: new Date(),
     };
 
@@ -28,7 +29,7 @@ export class InMemoryTokenRepository implements ITokenRepository {
   }
 
   async findToken(token: string) {
-    const objToken = this.items.find((item) => item.token === token);
+    const objToken = this.items.find((item) => item.accessToken === token);
 
     if (!objToken) {
       return null;
