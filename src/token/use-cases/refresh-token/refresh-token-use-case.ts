@@ -20,10 +20,8 @@ export class RefreshTokenUseCase {
     if (!token) throw new Error(INVALID_REFRESH_TOKEN);
 
     const user = await this.usersRepository.findById(token.user_id);
-    const email = user.email;
-    const password = user.password_hash;
 
-    const newToken = this.singInUseCase.execute({ email, password });
+    const newToken = this.singInUseCase.execute(user);
 
     return newToken;
   }

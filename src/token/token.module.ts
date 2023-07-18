@@ -8,6 +8,8 @@ import { RefreshTokenUseCase } from './use-cases/refresh-token/refresh-token-use
 import { IUsersRepository } from '@/users/interfaces';
 import { UsersRepository } from '@/users/infra/repositories';
 import { SingInUseCase } from '@/auth/use-case/sing-in-use-case/sing-in-use-case';
+import { IAuthRepository } from '@/auth/interfaces/auth-repositoey';
+import { AuthRepository } from '@/auth/infra/in-memory';
 
 @Module({
   controllers: [TokenController],
@@ -22,6 +24,10 @@ import { SingInUseCase } from '@/auth/use-case/sing-in-use-case/sing-in-use-case
     {
       provide: IUsersRepository,
       useClass: UsersRepository,
+    },
+    {
+      provide: IAuthRepository,
+      useClass: AuthRepository,
     },
   ],
   exports: [

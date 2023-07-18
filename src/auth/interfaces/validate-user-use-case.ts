@@ -1,4 +1,4 @@
-export class ISingInUseCase {
+export class IValidateUserUseCase {
   email: string;
   password: string;
 }
