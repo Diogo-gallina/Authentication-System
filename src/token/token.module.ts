@@ -7,7 +7,7 @@ import { TokenController } from '@/shared/infra/http/controllers/token-controlle
 import { RefreshTokenUseCase } from './use-cases/refresh-token/refresh-token-use-case';
 import { IUsersRepository } from '@/users/interfaces';
 import { UsersRepository } from '@/users/infra/repositories';
-import { SingInUseCase } from '@/auth/use-case/sing-in-use-case';
+import { SingInUseCase } from '@/auth/use-case/sing-in-use-case/sing-in-use-case';
 
 @Module({
   controllers: [TokenController],

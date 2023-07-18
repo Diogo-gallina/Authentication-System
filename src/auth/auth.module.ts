@@ -4,7 +4,7 @@ import { JwtModule } from '@nestjs/jwt';
 import { UsersModule } from '../users/users.module';
 import { AuthController } from '@/shared/infra/http/controllers';
 import { jwtConstants } from '@/shared/constants/constants';
-import { SingInUseCase } from './use-case/sing-in-use-case';
+import { SingInUseCase } from './use-case/sing-in-use-case/sing-in-use-case';
 import { IAuthRepository } from './interfaces/auth-repositoey';
 import { AuthRepository } from './infra/in-memory';
 import { SaveTokenUseCase } from '@/token/use-cases/';

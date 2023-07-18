@@ -1,9 +1,10 @@
-import { SingInUseCase } from '@/auth/use-case/sing-in-use-case';
+import { Injectable } from '@nestjs/common';
+
 import { INVALID_REFRESH_TOKEN } from '@/shared/constants/erros';
 import { ITokenRepository } from '@/token/interfaces';
 import { IRefreshToken } from '@/token/interfaces/refresh-token';
 import { IUsersRepository } from '@/users/interfaces';
-import { Injectable } from '@nestjs/common';
+import { SingInUseCase } from '@/auth/use-case/sing-in-use-case/sing-in-use-case';
 
 @Injectable()
 export class RefreshTokenUseCase {
