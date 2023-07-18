@@ -1,12 +1,15 @@
+import { ITokenRepository } from '@/token/interfaces';
 import { Injectable } from '@nestjs/common';
-
-import { IUsersRepository } from '@/users/interfaces';
 
 @Injectable()
 export class RefreshTokenUseCase {
-  constructor(private usersRepository: IUsersRepository) {}
+  constructor(private tokenRepository: ITokenRepository) {}
 
-  async execute(id: string): Promise<void> {
-    await this.usersRepository.deleteUser(id);
+  async execute({ token, userId }: ISaveToken): Promise<void> {
+    token = await this.tokenRepository.findToken
+
+    if (token) {
+      return oldToken
+    }
   }
 }

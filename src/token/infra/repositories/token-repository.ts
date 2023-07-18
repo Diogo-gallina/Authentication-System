@@ -33,4 +33,7 @@ export class TokenRpository implements ITokenRepository {
 
     return newToken;
   }
+
+  refrashToken(oldToken: string) {
+  }
 }
