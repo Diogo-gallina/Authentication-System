@@ -14,8 +14,8 @@ export class RefreshTokenUseCase {
     private singInUseCase: SingInUseCase,
   ) {}
 
-  async execute({ oldToken }: IRefreshToken) {
-    const token = await this.tokenRepository.findToken(oldToken);
+  async execute({ refreshToken }: IRefreshToken) {
+    const token = await this.tokenRepository.findToken(refreshToken);
 
     if (!token) throw new Error(INVALID_REFRESH_TOKEN);
 
