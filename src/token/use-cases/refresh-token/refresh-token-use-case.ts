@@ -8,11 +8,9 @@ export class RefreshTokenUseCase {
   constructor(private tokenRepository: ITokenRepository) {}
 
   async execute({ oldToken }: IRefreshToken) {
-    token = await this.tokenRepository.findToken;
+    const token = await this.tokenRepository.findToken(oldToken);
 
-    if (!token) {
-      throw new Error(INVALID_REFRESH_TOKEN);
-    }
+    if (!token) throw new Error(INVALID_REFRESH_TOKEN);
 
     return oldToken;
   }

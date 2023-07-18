@@ -4,12 +4,10 @@ import { Body, Controller, Put } from '@nestjs/common';
 
 @Controller('token')
 export class TokenController {
-  constructor(
-    private refreshTokenUseCase: RefreshTokenUseCase;
-  ) {}
+  constructor(private refreshTokenUseCase: RefreshTokenUseCase) {}
 
   @Put()
   async refreshToken(@Body() data: RefreshTokenDto) {
-    return this.refreshTokenUseCase.refreshToken(data.oldToken);
+    return this.refreshTokenUseCase.execute(data);
   }
 }
