@@ -51,6 +51,17 @@ export class TokenRepository implements ITokenRepository {
     });
   }
 
+  private async updateAccessToken(id: string, accessToken: string) {
+    return await prisma.token.update({
+      where: {
+        id,
+      },
+      data: {
+        accessToken,
+      },
+    });
+  }
+
   async findToken(token: string) {
     const objToken = await prisma.token.findUnique({
       where: {
