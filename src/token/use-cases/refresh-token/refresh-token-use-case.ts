@@ -13,7 +13,7 @@ export class RefreshTokenUseCase {
     if (!token) {
       throw new Error(INVALID_REFRESH_TOKEN);
     }
-    
+
     return oldToken;
   }
 }
