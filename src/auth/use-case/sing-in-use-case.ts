@@ -29,10 +29,7 @@ export class SingInUseCase {
     const payload = { sub: user.id, email: user.email };
     const token = await this.jwtService.signAsync(payload);
 
-    await this.tokenRepository.save({
-      token: token,
-      userId: user.id
-    })
+    await this.tokenRepository.save({ token: token, user_id: user.id });
 
     return {
       accessToken: token,

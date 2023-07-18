@@ -1,13 +1,12 @@
 import { Injectable } from '@nestjs/common';
+import { Prisma } from '@prisma/client';
 
 import { prisma } from '@/shared/infra/database/prisma';
 import { ITokenRepository } from '@/token/interfaces';
-import { ISaveToken } from '@/token/interfaces/save-token';
-
 
 @Injectable()
 export class TokenRpository implements ITokenRepository {
-  async save(data: ISaveToken) {
+  async save(data: Prisma.TokenCreateInput) {
     const token = await prisma.token.create({
       data,
     });
