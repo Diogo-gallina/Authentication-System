@@ -13,12 +13,10 @@ import { UpdatePasswordDTO } from '@/users/domain/dtos';
 export class UpdatePasswordUseCase {
   constructor(private usersRepository: IUsersRepository) {}
 
-  async execute({
-    id,
-    currentPassword,
-    newPassword,
-    confirmNewPassword,
-  }: UpdatePasswordDTO): Promise<void> {
+  async execute(
+    id: string,
+    { currentPassword, newPassword, confirmNewPassword }: UpdatePasswordDTO,
+  ): Promise<void> {
     const user = await this.usersRepository.findById(id);
 
     if (!user)

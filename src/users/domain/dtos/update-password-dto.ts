@@ -1,18 +1,12 @@
 import {
   IsNotEmpty,
   IsString,
-  IsUUID,
   Matches,
   MaxLength,
   MinLength,
 } from 'class-validator';
 
 export class UpdatePasswordDTO {
-  @IsString()
-  @IsNotEmpty({ message: 'I id field cannot be empty' })
-  @IsUUID('all', { message: 'id needs to be in the pattern uuid' })
-  id: string;
-
   @IsString()
   @IsNotEmpty({ message: 'I current password field cannot be empty' })
   currentPassword: string;

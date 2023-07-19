@@ -43,7 +43,7 @@ export class UserController {
 
   @Patch('update-password/:id')
   updateUser(@Param('id') id: string, @Body() data: UpdatePasswordDTO) {
-    return this.updatePassword.execute(data);
+    return this.updatePassword.execute(id, data);
   }
 
   @Delete('delete/:id')
