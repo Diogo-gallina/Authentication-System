@@ -1,8 +1,8 @@
 import { compare } from 'bcryptjs';
 
-import { IUsersRepository } from '@/users/interfaces/';
-import { InMemoryUsersRepository } from '@/users/test/in-memory/in-memory-users-repository';
 import { UpdatePasswordUseCase } from './update-password';
+import { IUsersRepository } from '../../interfaces';
+import { InMemoryUsersRepository } from '../../test/in-memory/in-memory-users-repository';
 
 describe('Update Password Use Case', () => {
   let usersRepository: IUsersRepository;
@@ -21,7 +21,6 @@ describe('Update Password Use Case', () => {
     });
 
     await sut.execute({
-      id: user.id,
       currentPassword: user.password_hash,
       newPassword: 'abC123!@#',
       confirmNewPassword: 'abC123!@#',
