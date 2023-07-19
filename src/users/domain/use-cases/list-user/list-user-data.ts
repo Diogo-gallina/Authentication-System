@@ -11,6 +11,9 @@ export class ListUsersUseCase {
   async execute(id: string): Promise<User> {
     const user = await this.usersRepository.findById(id);
 
+    if (user.deleted)
+      throw new HttpException(USER_DOES_NOT_EXIST, HttpStatus.NOT_FOUND);
+
     if (!user)
       throw new HttpException(USER_DOES_NOT_EXIST, HttpStatus.NOT_FOUND);
 
