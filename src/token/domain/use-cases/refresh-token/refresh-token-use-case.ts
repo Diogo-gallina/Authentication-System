@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 
 import { INVALID_REFRESH_TOKEN } from '@/shared/constants/errors';
 import { ITokenRepository } from '@/token/domain/interfaces';
@@ -17,7 +17,8 @@ export class RefreshTokenUseCase {
   async execute({ refreshToken }: RefreshTokenDto) {
     const token = await this.tokenRepository.findToken(refreshToken);
 
-    if (!token) throw new Error(INVALID_REFRESH_TOKEN);
+    if (!token)
+      throw new HttpException(INVALID_REFRESH_TOKEN, HttpStatus.NOT_FOUND);
 
     const user = await this.usersRepository.findById(token.user_id);
 
