@@ -1,3 +1,4 @@
+import { HttpException, HttpStatus } from '@nestjs/common';
 import { IUsersRepository } from '../../interfaces';
 import { InMemoryUsersRepository } from '../../test/in-memory/in-memory-users-repository';
 import { SoftDeleteUserUseCase } from './soft-delete-user';
@@ -11,7 +12,7 @@ describe('Delete Use Case', () => {
     sut = new SoftDeleteUserUseCase(usersRepository);
   });
 
-  it('should be able to delete a user', async () => {
+  it('should be able to soft delete a user', async () => {
     const user = await usersRepository.create({
       name: 'Leandro Diass',
       email: 'leandrddo@test.com',
@@ -22,6 +23,6 @@ describe('Delete Use Case', () => {
 
     const searchForId = await usersRepository.findById(user.id);
 
-    expect(searchForId).toBe(null);
+    expect(searchForId.deleted).toBe(true);
   });
 });

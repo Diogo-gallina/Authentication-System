@@ -1,8 +1,8 @@
 import { compare } from 'bcryptjs';
 
 import { RegisterUseCase } from './register-user';
-import { IUsersRepository } from '@/users/interfaces';
-import { InMemoryUsersRepository } from '@/users/test/in-memory/in-memory-users-repository';
+import { IUsersRepository } from '../../interfaces';
+import { InMemoryUsersRepository } from '../../test/in-memory/in-memory-users-repository';
 
 describe('Register Use Case', () => {
   let usersRepository: IUsersRepository;
