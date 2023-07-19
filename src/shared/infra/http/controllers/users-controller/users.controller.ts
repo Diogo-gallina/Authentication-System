@@ -10,7 +10,7 @@ import {
 } from '@nestjs/common';
 
 import {
-  DeleteUserUseCase,
+  SoftDeleteUserUseCase,
   ListUsersUseCase,
   RegisterUseCase,
   UpdatePasswordUseCase,
@@ -23,7 +23,7 @@ export class UserController {
   constructor(
     private registerUser: RegisterUseCase,
     private listUser: ListUsersUseCase,
-    private deleteUser: DeleteUserUseCase,
+    private deleteUser: SoftDeleteUserUseCase,
     private updatePassword: UpdatePasswordUseCase,
   ) {}
 

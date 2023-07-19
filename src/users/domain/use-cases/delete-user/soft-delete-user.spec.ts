@@ -1,14 +1,14 @@
-import { DeleteUserUseCase } from './delete-user';
-import { IUsersRepository } from '@/users/interfaces/';
-import { InMemoryUsersRepository } from '@/users/test/in-memory/in-memory-users-repository';
+import { IUsersRepository } from '../../interfaces';
+import { InMemoryUsersRepository } from '../../test/in-memory/in-memory-users-repository';
+import { SoftDeleteUserUseCase } from './soft-delete-user';
 
 describe('Delete Use Case', () => {
   let usersRepository: IUsersRepository;
-  let sut: DeleteUserUseCase;
+  let sut: SoftDeleteUserUseCase;
 
   beforeEach(() => {
     usersRepository = new InMemoryUsersRepository();
-    sut = new DeleteUserUseCase(usersRepository);
+    sut = new SoftDeleteUserUseCase(usersRepository);
   });
 
   it('should be able to delete a user', async () => {

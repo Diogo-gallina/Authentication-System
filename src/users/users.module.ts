@@ -6,7 +6,7 @@ import { IUsersRepository } from '@/users/domain/interfaces';
 import {
   RegisterUseCase,
   ListUsersUseCase,
-  DeleteUserUseCase,
+  SoftDeleteUserUseCase,
   UpdatePasswordUseCase,
 } from './domain/use-cases';
 
@@ -15,7 +15,7 @@ import {
   providers: [
     RegisterUseCase,
     ListUsersUseCase,
-    DeleteUserUseCase,
+    SoftDeleteUserUseCase,
     UpdatePasswordUseCase,
     {
       provide: IUsersRepository,

@@ -1,10 +1,5 @@
 import { compare } from 'bcryptjs';
-import {
-  HttpException,
-  HttpStatus,
-  Injectable,
-  UnauthorizedException,
-} from '@nestjs/common';
+import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 
 import { INVALID_CREDENTIALS_ERROR } from '@/shared/constants/errors';
 import { IUsersRepository } from '@/users/domain/interfaces';
