@@ -6,7 +6,7 @@ import { Body, Controller, Patch } from '@nestjs/common';
 export class TokenController {
   constructor(private refreshTokenUseCase: RefreshTokenUseCase) {}
 
-  @Patch()
+  @Patch('refresh')
   async refreshToken(@Body() data: RefreshTokenDto) {
     return this.refreshTokenUseCase.execute(data);
   }
