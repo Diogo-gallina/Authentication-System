@@ -1,8 +1,8 @@
 import { Body, Controller, Post } from '@nestjs/common';
 
-import { ISingInDto } from '@/auth/dto/sing-in-dto';
-import { SingInUseCase } from '@/auth/use-case/sing-in-use-case/sing-in-use-case';
-import { ValidateUserUseCase } from '@/auth/use-case/validate-user-use-case/validate-user-use-case';
+import { SingInUseCase } from '@/auth/domain/use-case/sing-in-use-case/sing-in-use-case';
+import { SingInDto } from '@/auth/domain/dtos';
+import { ValidateUserUseCase } from '@/auth/domain/use-case';
 
 @Controller('auth')
 export class AuthController {
@@ -12,7 +12,7 @@ export class AuthController {
   ) {}
 
   @Post()
-  async login(@Body() user: ISingInDto) {
+  async login(@Body() user: SingInDto) {
     const validatedUser = await this.validateUser.execute(user);
     return this.singIn.execute(validatedUser);
   }

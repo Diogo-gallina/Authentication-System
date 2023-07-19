@@ -1,5 +1,5 @@
-import { RefreshTokenDto } from '@/token/dto/refresh-token-dto';
-import { RefreshTokenUseCase } from '@/token/use-cases/refresh-token/refresh-token-use-case';
+import { RefreshTokenDto } from '@/token/domain/dtos/refresh-token-dto';
+import { RefreshTokenUseCase } from '@/token/domain/use-cases';
 import { Body, Controller, Patch } from '@nestjs/common';
 
 @Controller('session')

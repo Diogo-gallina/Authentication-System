@@ -7,7 +7,7 @@ import {
 import { JwtService } from '@nestjs/jwt';
 import { Request } from 'express';
 import { jwtConstants } from '../constants/jwt-constants';
-import { IValidateUserUseCase } from '@/auth/interfaces/validate-user-use-case';
+import { ValidateUserUseCaseDto } from '@/auth/domain/dtos';
 
 @Injectable()
 export class AuthGuard implements CanActivate {
@@ -22,7 +22,7 @@ export class AuthGuard implements CanActivate {
     try {
       const payload = (await this.jwtService.verifyAsync(token, {
         secret: jwtConstants.secret,
-      })) as IValidateUserUseCase;
+      })) as ValidateUserUseCaseDto;
       request.user = payload;
     } catch {
       throw new UnauthorizedException();

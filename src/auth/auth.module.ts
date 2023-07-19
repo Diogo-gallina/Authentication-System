@@ -3,17 +3,17 @@ import { JwtModule } from '@nestjs/jwt';
 
 import { UsersModule } from '../users/users.module';
 import { AuthController } from '@/shared/infra/http/controllers';
-import { SingInUseCase } from './use-case/sing-in-use-case/sing-in-use-case';
-import { IAuthRepository } from './interfaces/auth-repositoey';
-import { AuthRepository } from './infra/in-memory';
-import { ITokenRepository } from '@/token/interfaces';
+import { SingInUseCase } from './domain/use-case/sing-in-use-case/sing-in-use-case';
+import { ITokenRepository } from '@/token/domain/interfaces';
 import { TokenRepository } from '@/token/infra/repositories/token-repository';
-import { RefreshTokenUseCase } from '@/token/use-cases';
-import { IUsersRepository } from '@/users/interfaces';
+import { IUsersRepository } from '@/users/domain/interfaces';
 import { UsersRepository } from '@/users/infra/repositories';
-import { ValidateUserUseCase } from './use-case/validate-user-use-case/validate-user-use-case';
-import { GenerateAccessTokenUseCase } from '@/token/use-cases/generate-access-token-use-case.ts/generate-access-token-use-case';
+import { ValidateUserUseCase } from './domain/use-case/validate-user-use-case/validate-user-use-case';
 import { jwtConstants } from '@/shared/constants/jwt-constants';
+import {
+  GenerateAccessTokenUseCase,
+  RefreshTokenUseCase,
+} from '@/token/domain/use-cases';
 
 @Module({
   imports: [
@@ -29,10 +29,6 @@ import { jwtConstants } from '@/shared/constants/jwt-constants';
     RefreshTokenUseCase,
     SingInUseCase,
     GenerateAccessTokenUseCase,
-    {
-      provide: IAuthRepository,
-      useClass: AuthRepository,
-    },
     {
       provide: ITokenRepository,
       useClass: TokenRepository,

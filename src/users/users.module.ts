@@ -2,13 +2,13 @@ import { Module } from '@nestjs/common';
 
 import { UserController } from '@/shared/infra/http/controllers/users-controller/users.controller';
 import { UsersRepository } from './infra/repositories/users.repository';
-import { IUsersRepository } from '@/users/interfaces';
+import { IUsersRepository } from '@/users/domain/interfaces';
 import {
-  DeleteUserUseCase,
-  ListUsersUseCase,
   RegisterUseCase,
+  ListUsersUseCase,
+  DeleteUserUseCase,
   UpdatePasswordUseCase,
-} from './use-cases';
+} from './domain/use-cases';
 
 @Module({
   controllers: [UserController],

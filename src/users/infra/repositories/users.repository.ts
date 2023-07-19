@@ -2,7 +2,8 @@ import { Prisma } from '@prisma/client';
 import { Injectable } from '@nestjs/common';
 
 import { prisma } from '@/shared/infra/database/prisma';
-import { IUsersRepository, IValidateUpdatePassword } from '@/users/interfaces';
+import { IUsersRepository } from '@/users/domain/interfaces';
+import { ValidateUpdatePasswordDto } from '@/users/domain/interfaces';
 
 @Injectable()
 export class UsersRepository implements IUsersRepository {
@@ -34,7 +35,7 @@ export class UsersRepository implements IUsersRepository {
     return user;
   }
 
-  async updatePassword(data: IValidateUpdatePassword): Promise<void> {
+  async updatePassword(data: ValidateUpdatePasswordDto): Promise<void> {
     await prisma.user.update({
       where: { id: data.id },
       data: {

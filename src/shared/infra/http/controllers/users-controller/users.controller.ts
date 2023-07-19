@@ -14,8 +14,8 @@ import {
   ListUsersUseCase,
   RegisterUseCase,
   UpdatePasswordUseCase,
-} from '@/users/use-cases';
-import { RegisterUserDto, UpdatePasswordDTO } from '@/users/dto';
+} from '@/users/domain/use-cases';
+import { RegisterUserDto, UpdatePasswordDTO } from '@/users/domain/dtos';
 import { AuthGuard } from '@/shared/guards/auth.guard';
 
 @Controller('user')
