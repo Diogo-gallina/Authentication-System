@@ -5,7 +5,7 @@ import {
   IUsersRepository,
 } from '@/users/domain/interfaces';
 import { EMAIL_ALREADY_EXISTS } from '@/shared/constants/errors';
-import { Injectable } from '@nestjs/common';
+import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { RegisterUserDto } from '@/users/domain/dtos';
 
 @Injectable()
@@ -21,7 +21,8 @@ export class RegisterUseCase {
 
     const userWithSameEmail = await this.usersRepository.findByEmail(email);
 
-    if (userWithSameEmail) throw new Error(EMAIL_ALREADY_EXISTS);
+    if (userWithSameEmail)
+      throw new HttpException(EMAIL_ALREADY_EXISTS, HttpStatus.CONFLICT);
 
     const user = await this.usersRepository.create({
       name,

@@ -44,10 +44,13 @@ export class UsersRepository implements IUsersRepository {
     });
   }
 
-  async deleteUser(id: string) {
-    await prisma.user.delete({
+  async softDeleteUser(id: string) {
+    await prisma.user.update({
       where: {
         id,
+      },
+      data: {
+        deleted: true,
       },
     });
   }

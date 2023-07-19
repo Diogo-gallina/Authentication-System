@@ -13,6 +13,6 @@ export class SoftDeleteUserUseCase {
     if (!user)
       throw new HttpException(USER_DOES_NOT_EXIST, HttpStatus.NOT_FOUND);
 
-    await this.usersRepository.deleteUser(id);
+    await this.usersRepository.softDeleteUser(id);
   }
 }
