@@ -13,7 +13,7 @@ import { AuthRepository } from '@/auth/infra/in-memory';
 import { JwtModule } from '@nestjs/jwt';
 import { GenerateAccessTokenUseCase } from './use-cases/generate-access-token-use-case.ts/generate-access-token-use-case';
 import { UsersModule } from '@/users/users.module';
-import { jwtConstants } from '@/shared/constants/constants';
+import { jwtConstants } from '@/shared/constants/jwt-constants';
 
 @Module({
   imports: [

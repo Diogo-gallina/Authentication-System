@@ -6,9 +6,8 @@
 - [X] O sistema deve permitir que os usuários atualizem sua senha. 
 - [ ] O sistema deve permitir que o usuário recupere sua senha.**Diferencial**
 - [X] O sistema deve permitir que os usuários façam login utilizando seu e-mail e senha cadastrados.
-- [ ] O sistema deve permitir que os usuários façam login, gerando um token de autenticação e um refresh token;
-- [ ] O sistema deve permitir que os usuários autenticados permaneçam on-line sem precisar deslogar.
-- [ ] O sistema deve permitir que o usuário faça login apenas com autenticação de dois fatores via sms ou e-mail.
+- [X] O sistema deve permitir que os usuários façam login, gerando um token de autenticação e um refresh token;
+- [X] O sistema deve permitir que os usuários autenticados permaneçam on-line sem precisar deslogar.
 
 **Regras de Negócio:**
 
@@ -19,7 +18,7 @@
 - [X] O nome do usuário deve ter no minímo duas palavras
 - [X] O nome do usuário de ter no minimo 6 caracteres e no máximo 64
 - [X] Ao cadastrar o e-mail, deve validar a formatação do email “example@.com”.
-- [ ] O email deve ter no minimo 8 caracteres e no maximo 2
+- [x] O email deve ter no minimo 8 caracteres e no maximo 250
 - [X] As senhas dos usuários devem ser armazenadas de forma segura, utilizando técnicas de criptografia.
 - [ ] As senhas devem estar num padrão alfanumérico, min: 8 max: 32.
 - [###] Os usuários autenticados devem ter permissão para acessar e atualizar apenas seu próprio perfil.

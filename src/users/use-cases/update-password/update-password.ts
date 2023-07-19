@@ -27,11 +27,11 @@ export class UpdatePasswordUseCase {
     if (newPassword !== confirmNewPassword)
       throw new Error(CONFIRM_PASSWORD_IS_DIFERENT_NEW_PASSWORD);
 
-    await hash(newPassword, 6);
+    const newPasswordHash = await hash(newPassword, 6);
 
     await this.usersRepository.updatePassword({
       id,
-      newPassword,
+      newPassword: newPasswordHash,
     });
   }
 }

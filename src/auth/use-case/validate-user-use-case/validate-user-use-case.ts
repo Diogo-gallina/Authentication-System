@@ -1,22 +1,23 @@
 import { compare } from 'bcryptjs';
-import { Injectable } from '@nestjs/common';
+import { Injectable, UnauthorizedException } from '@nestjs/common';
 
-import { IValidateUserUseCase } from '../../interfaces/validate-user-use-case';
 import { INVALID_CREDENTIALS_ERROR } from '@/shared/constants/errors';
-import { IAuthRepository } from '../../interfaces/auth-repositoey';
+import { IValidateUserUseCase } from '@/auth/interfaces/validate-user-use-case';
+import { IUsersRepository } from '@/users/interfaces';
 
 @Injectable()
 export class ValidateUserUseCase {
-  constructor(private authRepository: IAuthRepository) {}
+  constructor(private usersRepository: IUsersRepository) {}
 
   async execute({ email, password }: IValidateUserUseCase) {
-    const user = await this.authRepository.findByEmail(email);
+    const user = await this.usersRepository.findByEmail(email);
 
-    if (!user) throw new Error(INVALID_CREDENTIALS_ERROR);
+    if (!user) throw new UnauthorizedException(INVALID_CREDENTIALS_ERROR);
 
     const doesPasswordMatches = await compare(password, user.password_hash);
 
-    if (!doesPasswordMatches) throw new Error(INVALID_CREDENTIALS_ERROR);
+    if (!doesPasswordMatches)
+      throw new UnauthorizedException(INVALID_CREDENTIALS_ERROR);
 
     return user;
   }

@@ -27,7 +27,7 @@ export class UserController {
     private updatePassword: UpdatePasswordUseCase,
   ) {}
 
-  @Post()
+  @Post('create')
   create(
     @Body()
     data: RegisterUserDto,
@@ -35,18 +35,18 @@ export class UserController {
     return this.registerUser.execute(data);
   }
 
-  @Get('/:id')
+  @Get('list-one/:id')
   @UseGuards(AuthGuard)
   findOne(@Param('id') id: string) {
     return this.listUser.execute(id);
   }
 
-  @Patch('/:id')
+  @Patch('update-password/:id')
   updateUser(@Param('id') id: string, @Body() data: UpdatePasswordDTO) {
     return this.updatePassword.execute(data);
   }
 
-  @Delete('/:id')
+  @Delete('delete/:id')
   remove(@Param('id') id: string) {
     return this.deleteUser.execute(id);
   }
