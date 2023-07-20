@@ -1,8 +1,9 @@
 import { User } from '@prisma/client';
 import { JwtService } from '@nestjs/jwt';
-import { Injectable } from '@nestjs/common';
+import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 
 import { ITokenRepository } from '@/token/domain/interfaces';
+import { USER_DOES_NOT_EXIST } from '@/shared/constants/errors';
 
 @Injectable()
 export class GenerateAccessTokenUseCase {
@@ -12,15 +13,19 @@ export class GenerateAccessTokenUseCase {
   ) {}
 
   async execute(user: User) {
-    const payload = { sub: user.id, email: user.email };
-    const accessToken = await this.jwtService.signAsync(payload, {
-      expiresIn: '60s',
-    });
+    try {
+      const payload = { sub: user.id, email: user.email };
+      const accessToken = await this.jwtService.signAsync(payload, {
+        expiresIn: '60s',
+      });
 
-    this.tokenRepository.updateAccessToken(user.id, accessToken);
+      this.tokenRepository.updateAccessToken(user.id, accessToken);
 
-    return {
-      accessToken,
-    };
+      return {
+        accessToken,
+      };
+    } catch (error) {
+      throw new HttpException(USER_DOES_NOT_EXIST, HttpStatus.NOT_FOUND);
+    }
   }
 }

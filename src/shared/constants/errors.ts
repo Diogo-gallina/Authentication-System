@@ -7,3 +7,4 @@ export const INVALID_CREDENTIALS_ERROR = 'Invalid credentials error.';
 export const INVALID_REFRESH_TOKEN = 'Invalid refresh token.';
 export const INVALID_ACCESS_TOKEN = 'Invalid access token.';
 export const ERROR_WHEN_GENERATING_TOKEN = 'Error when generating token';
+export const TOKEN_DOESNT_EXIST = 'Token doesnt exist.';

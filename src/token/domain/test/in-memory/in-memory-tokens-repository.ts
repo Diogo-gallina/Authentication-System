@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { Prisma, Token } from '@prisma/client';
 import { ITokenRepository } from '@/token/domain/interfaces';
 
@@ -65,10 +65,6 @@ export class InMemoryTokenRepository implements ITokenRepository {
 
   async updateAccessToken(id: string, accessToken: string): Promise<Token> {
     const existingToken = this.tokens.get(id);
-
-    if (!existingToken) {
-      throw new Error(`Token with id ${id} not found.`);
-    }
 
     const updatedToken: Token = {
       ...existingToken,
