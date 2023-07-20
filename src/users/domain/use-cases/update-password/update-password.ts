@@ -30,10 +30,6 @@ export class UpdatePasswordUseCase {
       user.password_hash,
     );
 
-    console.log(user.password_hash);
-    console.log(currentPassword);
-    console.log(doesPasswordMatches);
-
     if (!doesPasswordMatches)
       throw new HttpException(
         INCORRECT_CURRENT_PASSWORD,

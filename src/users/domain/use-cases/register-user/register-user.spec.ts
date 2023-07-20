@@ -1,8 +1,10 @@
 import { compare } from 'bcryptjs';
+import { HttpException, HttpStatus } from '@nestjs/common';
 
 import { RegisterUseCase } from './register-user';
 import { IUsersRepository } from '../../interfaces';
 import { InMemoryUsersRepository } from '../../test/in-memory/in-memory-users-repository';
+import { EMAIL_ALREADY_EXISTS } from '@/shared/constants/errors';
 
 describe('Register Use Case', () => {
   let usersRepository: IUsersRepository;
@@ -52,6 +54,8 @@ describe('Register Use Case', () => {
         email,
         password: '123456',
       }),
-    ).rejects.toBeInstanceOf(Error);
+    ).rejects.toThrow(
+      new HttpException(EMAIL_ALREADY_EXISTS, HttpStatus.CONFLICT),
+    );
   });
 });
