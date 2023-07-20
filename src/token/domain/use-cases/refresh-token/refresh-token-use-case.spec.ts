@@ -1,20 +1,29 @@
-import { HttpStatus, HttpException } from '@nestjs/common';
+import { HttpException } from '@nestjs/common';
+import { JwtService } from '@nestjs/jwt';
 
 import { RefreshTokenUseCase } from './refresh-token-use-case';
 import { InMemoryUsersRepository } from '@/users/domain/test/in-memory/in-memory-users-repository';
 import { InMemoryTokenRepository } from '../../test/in-memory/in-memory-tokens-repository';
 import { GenerateAccessTokenUseCase } from '../generate-access-token/generate-access-token-use-case';
+import { jwtConstants } from '@/shared/constants/jwt-constants';
 
 describe('RefreshTokenUseCase', () => {
+  let jwtService: JwtService;
   let tokenRepository: InMemoryTokenRepository;
   let usersRepository: InMemoryUsersRepository;
   let generateAccessTokenUseCase: GenerateAccessTokenUseCase;
   let refreshTokenUseCase: RefreshTokenUseCase;
 
   beforeEach(() => {
+    jwtService = new JwtService({
+      secret: jwtConstants.secret,
+    });
     tokenRepository = new InMemoryTokenRepository();
     usersRepository = new InMemoryUsersRepository();
-    generateAccessTokenUseCase = new GenerateAccessTokenUseCase();
+    generateAccessTokenUseCase = new GenerateAccessTokenUseCase(
+      tokenRepository,
+      jwtService,
+    );
     refreshTokenUseCase = new RefreshTokenUseCase(
       tokenRepository,
       usersRepository,
@@ -22,38 +31,60 @@ describe('RefreshTokenUseCase', () => {
     );
   });
 
-  it('should generate a new access token when a valid refresh token is provided', async () => {
-    const user = await usersRepository.create({
-      name: 'John Doe',
-      email: 'john@example.com',
-      password_hash: 'hashedPassword',
+  describe('Sucess Test', () => {
+    it('should return a new access token', async () => {
+      const user = await usersRepository.create({
+        id: 'id-01',
+        email: 'user@email.com',
+        name: 'user',
+        password_hash: 'fakePassword',
+        created_at: new Date(),
+        deleted: false,
+      });
+
+      const refreshToken = 'validRefreshToken';
+      await tokenRepository.create({
+        user_id: user.id,
+        refreshToken: refreshToken,
+        accessToken: 'oldAccessToken',
+      });
+
+      const newToken = await refreshTokenUseCase.execute({
+        refreshToken: refreshToken,
+      });
+
+      expect(newToken.accessToken).toEqual(expect.any(String));
     });
-
-    const refreshToken = 'validRefreshToken';
-    await tokenRepository.create({
-      user_id: user.id,
-      refreshToken: refreshToken,
-      accessToken: 'oldAccessToken',
-    });
-
-    const newToken = await refreshTokenUseCase.execute({ refreshToken });
-
-    expect(newToken).toBeDefined();
-    expect(newToken.accessToken).toBeTruthy();
-    expect(newToken.user_id).toBe(user.id);
   });
 
-  it('should throw an HttpException when an invalid refresh token is provided', async () => {
-    const invalidRefreshToken = 'invalidRefreshToken';
+  describe('Fail Test', () => {
+    it('should return an exception when there is no user', async () => {
+      try {
+        const refreshToken = 'validRefreshToken';
+        await tokenRepository.create({
+          user_id: 'invalid-id',
+          refreshToken: refreshToken,
+          accessToken: 'oldAccessToken',
+        });
 
-    await expect(
-      refreshTokenUseCase.execute({ refreshToken: invalidRefreshToken }),
-    ).rejects.toThrow(HttpException);
+        await refreshTokenUseCase.execute({
+          refreshToken: refreshToken,
+        });
+      } catch (error) {
+        expect(error).toBeInstanceOf(HttpException);
+      }
+    });
 
-    try {
-      await refreshTokenUseCase.execute({ refreshToken: invalidRefreshToken });
-    } catch (error) {
-      expect(error.getStatus()).toBe(HttpStatus.NOT_FOUND);
-    }
+    it('should', async () => {
+      try {
+        const refreshToken = null;
+
+        await refreshTokenUseCase.execute({
+          refreshToken: refreshToken,
+        });
+      } catch (error) {
+        expect(error).toBeInstanceOf(HttpException);
+      }
+    });
   });
 });

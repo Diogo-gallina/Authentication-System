@@ -22,7 +22,7 @@ describe('GenerateAccessTokenUseCase', () => {
   describe('Sucess Test', () => {
     it('should', async () => {
       const user = {
-        id: 'invalid-id',
+        id: 'id-01',
         email: 'user@email.com',
         name: 'user',
         password_hash: 'fakePassword',
