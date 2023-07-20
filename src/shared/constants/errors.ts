@@ -6,3 +6,4 @@ export const CONFIRM_PASSWORD_IS_DIFERENT_NEW_PASSWORD =
 export const INVALID_CREDENTIALS_ERROR = 'Invalid credentials error.';
 export const INVALID_REFRESH_TOKEN = 'Invalid refresh token.';
 export const INVALID_ACCESS_TOKEN = 'Invalid access token.';
+export const ERROR_WHEN_GENERATING_TOKEN = 'Error when generating token';

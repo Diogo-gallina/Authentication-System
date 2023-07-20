@@ -12,11 +12,12 @@ module.exports = {
   transform: {
     '^.+\\.(t|j)s$': 'ts-jest',
   },
-  collectCoverage: true, // Habilita a coleta de cobertura de código
+  collectCoverage: true,
   collectCoverageFrom: [
     '**/*.(t|j)s',
-    '!**/node_modules/**', // Exclui a pasta node_modules da cobertura
+    '!**/node_modules/**',
   ],
   coverageDirectory: '../coverage',
   testEnvironment: 'node',
+  preset: 'ts-jest',
 };

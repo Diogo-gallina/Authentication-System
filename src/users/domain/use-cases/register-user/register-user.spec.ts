@@ -9,6 +9,7 @@ import { EMAIL_ALREADY_EXISTS } from '@/shared/constants/errors';
 describe('Register Use Case', () => {
   let usersRepository: IUsersRepository;
   let sut: RegisterUseCase;
+
   beforeEach(() => {
     usersRepository = new InMemoryUsersRepository();
     sut = new RegisterUseCase(usersRepository);

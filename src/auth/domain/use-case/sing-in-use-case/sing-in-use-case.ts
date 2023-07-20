@@ -1,8 +1,9 @@
 import { JwtService } from '@nestjs/jwt';
-import { Injectable } from '@nestjs/common';
+import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 
 import { ITokenRepository } from '@/token/domain/interfaces';
 import { User } from '@prisma/client';
+import { ERROR_WHEN_GENERATING_TOKEN } from '@/shared/constants/errors';
 
 @Injectable()
 export class SingInUseCase {
@@ -12,27 +13,34 @@ export class SingInUseCase {
   ) {}
 
   async execute(user: User) {
-    const payload = { sub: user.id, email: user.email };
-    const token = await this.jwtService.signAsync(payload);
+    try {
+      const payload = { sub: user.id, email: user.email };
+      const token = await this.jwtService.signAsync(payload);
 
-    const refreshToken = await this.generateRefreshToken();
+      const refreshToken = await this.generateRefreshToken();
 
-    await this.tokenRepository.create({
-      user_id: user.id,
-      accessToken: token,
-      refreshToken: refreshToken,
-    });
+      await this.tokenRepository.create({
+        user_id: user.id,
+        accessToken: token,
+        refreshToken: refreshToken,
+      });
 
-    return {
-      accessToken: token,
-      refreshToken,
-    };
+      return {
+        accessToken: token,
+        refreshToken,
+      };
+    } catch {
+      throw new HttpException(
+        ERROR_WHEN_GENERATING_TOKEN,
+        HttpStatus.INTERNAL_SERVER_ERROR,
+      );
+    }
   }
 
   private async generateRefreshToken(): Promise<string> {
     const refreshTokenPayload = { tokenType: 'refresh' };
     const refreshToken = await this.jwtService.signAsync(refreshTokenPayload, {
-      expiresIn: '60s',
+      expiresIn: '2h',
     });
 
     return refreshToken;
