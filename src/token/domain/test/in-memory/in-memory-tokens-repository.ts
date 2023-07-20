@@ -1,53 +1,86 @@
-// import { Prisma, Token } from '@prisma/client';
+import { Injectable } from '@nestjs/common';
+import { Prisma, Token } from '@prisma/client';
+import { ITokenRepository } from '@/token/domain/interfaces';
 
-// import { ITokenRepository } from '@/token/interfaces';
-// import { GetResult } from '@prisma/client/runtime/library';
+@Injectable()
+export class InMemoryTokenRepository implements ITokenRepository {
+  private tokens: Map<string, Token> = new Map();
 
-// export class InMemoryTokenRepository implements ITokenRepository {
-//   findExistingToken(user_id: string): Promise<GetResult<{ id: string; accessToken: string; refreshToken: string; user_id: string; created_at: Date; }, unknown> & {}> {
-//     throw new Error('Method not implemented.');
-//   }
-//   createToken(data: Prisma.TokenUncheckedCreateInput): Promise<GetResult<{ id: string; accessToken: string; refreshToken: string; user_id: string; created_at: Date; }, unknown> & {}> {
-//     throw new Error('Method not implemented.');
-//   }
-//   updateAccessToken(id: string, accessToken: string): Promise<GetResult<{ id: string; accessToken: string; refreshToken: string; user_id: string; created_at: Date; }, unknown> & {}> {
-//     throw new Error('Method not implemented.');
-//   }
-//   updateToken(id: string, accessToken: string, refreshToken: string): Promise<GetResult<{ id: string; accessToken: string; refreshToken: string; user_id: string; created_at: Date; }, unknown> & {}> {
-//     throw new Error('Method not implemented.');
-//   }
-//   public items: Token[] = [];
+  async create(data: Prisma.TokenUncheckedCreateInput): Promise<Token> {
+    const { user_id, accessToken, refreshToken } = data;
+    const existingToken = await this.findExistingToken(user_id);
 
-//   async create(data: Token): Promise<Token> {
-//     const { user_id, accessToken, refreshToken } = data;
+    if (existingToken) {
+      return this.updateToken(existingToken.id, accessToken, refreshToken);
+    }
 
-//     const existingToken = this.items.find((t) => t.user_id === user_id);
+    const newToken: Token = {
+      id: (this.tokens.size + 1).toString(),
+      user_id,
+      accessToken,
+      refreshToken,
+      created_at: new Date(),
+    };
 
-//     if (existingToken) {
-//       existingToken.accessToken = accessToken;
-//       return existingToken;
-//     }
+    this.tokens.set(newToken.id, newToken);
+    return newToken;
+  }
 
-//     const newToken: Token = {
-//       id: Math.random().toString(),
-//       user_id,
-//       accessToken,
-//       refreshToken,
-//       created_at: new Date(),
-//     };
+  async findExistingToken(user_id: string): Promise<Token | null> {
+    const tokensArray = Array.from(this.tokens.values());
+    return tokensArray.find((token) => token.user_id === user_id) || null;
+  }
 
-//     this.items.push(newToken);
+  async updateToken(
+    id: string,
+    accessToken: string,
+    refreshToken: string,
+  ): Promise<Token> {
+    const existingToken = this.tokens.get(id);
 
-//     return newToken;
-//   }
+    if (!existingToken) {
+      throw new Error(`Token with id ${id} not found.`);
+    }
 
-//   async findToken(token: string) {
-//     const objToken = this.items.find((item) => item.accessToken === token);
+    const updatedToken: Token = {
+      ...existingToken,
+      accessToken,
+      refreshToken,
+    };
 
-//     if (!objToken) {
-//       return null;
-//     }
+    this.tokens.set(id, updatedToken);
+    return updatedToken;
+  }
 
-//     return objToken;
-//   }
-// }
+  async createToken(data: Prisma.TokenUncheckedCreateInput): Promise<Token> {
+    const newToken: Token = {
+      id: (this.tokens.size + 1).toString(),
+      ...data,
+      created_at: new Date(),
+    };
+
+    this.tokens.set(newToken.id, newToken);
+    return newToken;
+  }
+
+  async updateAccessToken(id: string, accessToken: string): Promise<Token> {
+    const existingToken = this.tokens.get(id);
+
+    if (!existingToken) {
+      throw new Error(`Token with id ${id} not found.`);
+    }
+
+    const updatedToken: Token = {
+      ...existingToken,
+      accessToken,
+    };
+
+    this.tokens.set(id, updatedToken);
+    return updatedToken;
+  }
+
+  async findRefreshToken(token: string): Promise<Token | null> {
+    const tokensArray = Array.from(this.tokens.values());
+    return tokensArray.find((t) => t.refreshToken === token) || null;
+  }
+}

@@ -1,5 +1,5 @@
 export class SaveTokenDto {
-  token: string;
+  accessToken: string;
   refreshToken: string;
   userId: string;
 }

@@ -15,7 +15,7 @@ export class RefreshTokenUseCase {
   ) {}
 
   async execute({ refreshToken }: RefreshTokenDto) {
-    const token = await this.tokenRepository.findToken(refreshToken);
+    const token = await this.tokenRepository.findRefreshToken(refreshToken);
 
     if (!token)
       throw new HttpException(INVALID_REFRESH_TOKEN, HttpStatus.NOT_FOUND);

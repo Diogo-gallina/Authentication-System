@@ -5,7 +5,7 @@ export abstract class ITokenRepository {
   abstract findExistingToken(user_id: string): Promise<Token>;
   abstract createToken(data: Prisma.TokenUncheckedCreateInput): Promise<Token>;
   abstract updateAccessToken(id: string, accessToken: string): Promise<Token>;
-  abstract findToken(token: string): Promise<Token>;
+  abstract findRefreshToken(token: string): Promise<Token>;
   abstract updateToken(
     id: string,
     accessToken: string,
