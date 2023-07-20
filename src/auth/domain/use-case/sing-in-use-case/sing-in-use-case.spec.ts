@@ -8,13 +8,22 @@ describe('SingInUseCase', () => {
   let jwtService: JwtService;
   let tokenRepository: InMemoryTokenRepository;
   let sut: SingInUseCase;
+  let createTokenMock: jest.SpyInstance;
+  let expectedSingAsyncResponse: string;
 
-  beforeEach(() => {
+  beforeAll(() => {
+    expectedSingAsyncResponse = 'anyToken';
+
     jwtService = new JwtService({
       secret: jwtConstants.secret,
     });
     tokenRepository = new InMemoryTokenRepository();
     sut = new SingInUseCase(tokenRepository, jwtService);
+    createTokenMock = jest.spyOn(JwtService.prototype, 'signAsync');
+  });
+
+  beforeEach(() => {
+    createTokenMock.mockResolvedValue(expectedSingAsyncResponse);
   });
 
   it('should create access and refresh tokens', async () => {
@@ -29,8 +38,10 @@ describe('SingInUseCase', () => {
 
     const result = await sut.execute(user);
 
-    expect(result.accessToken).toBeDefined();
-    expect(result.refreshToken).toBeDefined();
+    expect(result).toEqual({
+      accessToken: expectedSingAsyncResponse,
+      refreshToken: expectedSingAsyncResponse,
+    });
   });
 
   it('should throw an exception when creating an invalid token  ', async () => {

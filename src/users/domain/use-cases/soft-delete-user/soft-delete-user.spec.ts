@@ -14,38 +14,42 @@ describe('Soft Delete Use Case', () => {
     sut = new SoftDeleteUserUseCase(usersRepository);
   });
 
-  it('should be able to soft delete a user', async () => {
-    const user = await usersRepository.create({
-      id: 'id-01',
-      name: 'Leandro Diass',
-      email: 'leandrddo@test.com',
-      password_hash: '123456',
+  describe('Sucess test', () => {
+    it('should be able to soft delete a user', async () => {
+      const user = await usersRepository.create({
+        id: 'id-01',
+        name: 'Leandro Diass',
+        email: 'leandrddo@test.com',
+        password_hash: '123456',
+      });
+
+      await sut.execute(user.id);
+
+      const searchForId = await usersRepository.findById(user.id);
+
+      expect(searchForId.deleted).toBe(true);
     });
-
-    await sut.execute(user.id);
-
-    const searchForId = await usersRepository.findById(user.id);
-
-    expect(searchForId.deleted).toBe(true);
   });
 
-  it('should return null when looking for an id that doesnt exist', async () => {
-    const searchForId = await usersRepository.findById('fake-id');
+  describe('Fail test', () => {
+    it('should return null when looking for an id that doesnt exist', async () => {
+      const searchForId = await usersRepository.findById('fake-id');
 
-    expect(searchForId).toBe(null);
-  });
-
-  it('should not delete a user, because he is already deleted', async () => {
-    const user = await usersRepository.create({
-      id: 'id-01',
-      name: 'Leandro Diass',
-      email: 'leandrddo@test.com',
-      password_hash: '123456',
-      deleted: true,
+      expect(searchForId).toBe(null);
     });
 
-    await expect(() => sut.execute(user.id)).rejects.toThrow(
-      new HttpException(USER_DOES_NOT_EXIST, HttpStatus.NOT_FOUND),
-    );
+    it('should not delete a user, because he is already deleted', async () => {
+      const user = await usersRepository.create({
+        id: 'id-01',
+        name: 'Leandro Diass',
+        email: 'leandrddo@test.com',
+        password_hash: '123456',
+        deleted: true,
+      });
+
+      await expect(() => sut.execute(user.id)).rejects.toThrow(
+        new HttpException(USER_DOES_NOT_EXIST, HttpStatus.NOT_FOUND),
+      );
+    });
   });
 });

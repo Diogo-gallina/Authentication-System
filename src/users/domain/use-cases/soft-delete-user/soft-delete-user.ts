@@ -10,10 +10,7 @@ export class SoftDeleteUserUseCase {
   async execute(id: string): Promise<void> {
     const user = await this.usersRepository.findById(id);
 
-    if (user.deleted)
-      throw new HttpException(USER_DOES_NOT_EXIST, HttpStatus.NOT_FOUND);
-
-    if (!user)
+    if (!user || user.deleted)
       throw new HttpException(USER_DOES_NOT_EXIST, HttpStatus.NOT_FOUND);
 
     await this.usersRepository.softDeleteUser(id);

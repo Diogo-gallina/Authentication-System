@@ -12,7 +12,10 @@ export class SingInUseCase {
     private jwtService: JwtService,
   ) {}
 
-  async execute(user: User) {
+  async execute(user: User): Promise<{
+    accessToken: string;
+    refreshToken: string;
+  }> {
     try {
       const payload = { sub: user.id, email: user.email };
       const token = await this.jwtService.signAsync(payload);
@@ -32,7 +35,7 @@ export class SingInUseCase {
     } catch {
       throw new HttpException(
         ERROR_WHEN_GENERATING_TOKEN,
-        HttpStatus.INTERNAL_SERVER_ERROR,
+        HttpStatus.UNAUTHORIZED,
       );
     }
   }

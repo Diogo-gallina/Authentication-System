@@ -1,9 +1,5 @@
 module.exports = {
-  moduleFileExtensions: [
-    'js',
-    'json',
-    'ts',
-  ],
+  moduleFileExtensions: ['ts', 'tsx', 'js', 'jsx', 'json', 'node'],
   moduleNameMapper: {
     '^@/(.*)$': '<rootDir>/$1',
   },
@@ -13,10 +9,7 @@ module.exports = {
     '^.+\\.(t|j)s$': 'ts-jest',
   },
   collectCoverage: true,
-  collectCoverageFrom: [
-    '**/*.(t|j)s',
-    '!**/node_modules/**',
-  ],
+  collectCoverageFrom: ['**/*.(t|j)s', '!**/node_modules/**'],
   coverageDirectory: '../coverage',
   testEnvironment: 'node',
   preset: 'ts-jest',
