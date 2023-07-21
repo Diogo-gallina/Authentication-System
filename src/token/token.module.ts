@@ -20,7 +20,6 @@ import {
     UsersModule,
     JwtModule.register({
       secret: jwtConstants.secret,
-      signOptions: { expiresIn: '60s' },
     }),
   ],
   controllers: [TokenController],

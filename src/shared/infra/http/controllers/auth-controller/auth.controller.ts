@@ -11,7 +11,7 @@ import { SingInUseCase } from '@/auth/domain/use-case/sing-in-use-case/sing-in-u
 import { SingInDto } from '@/auth/domain/dtos';
 import { ValidateUserUseCase } from '@/auth/domain/use-case';
 
-@ApiTags('Controller')
+@ApiTags('Login')
 @Controller('auth')
 export class AuthController {
   constructor(
@@ -19,7 +19,7 @@ export class AuthController {
     private validateUser: ValidateUserUseCase,
   ) {}
 
-  @Post('login')
+  @Post()
   @ApiOperation({ summary: 'Create a new user' })
   @ApiBody({
     schema: {

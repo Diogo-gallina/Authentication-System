@@ -16,7 +16,6 @@ import { jwtConstants } from '@/shared/constants/jwt-constants';
   imports: [
     JwtModule.register({
       secret: jwtConstants.secret,
-      signOptions: { expiresIn: '60s' },
     }),
   ],
   controllers: [UserController],

@@ -43,6 +43,7 @@ describe('RefreshTokenUseCase', () => {
       });
 
       const refreshToken = 'validRefreshToken';
+
       await tokenRepository.create({
         user_id: user.id,
         refreshToken: refreshToken,

@@ -16,7 +16,6 @@ import {
   ApiNotFoundResponse,
   ApiOkResponse,
   ApiOperation,
-  ApiResponse,
   ApiTags,
   ApiUnauthorizedResponse,
 } from '@nestjs/swagger';
@@ -29,7 +28,7 @@ import {
 import { RegisterUserDto, UpdatePasswordDTO } from '@/users/domain/dtos';
 import { AuthGuard } from '@/shared/guards/auth.guard';
 
-@ApiTags('user')
+@ApiTags('User')
 @Controller('user')
 export class UserController {
   constructor(
@@ -123,8 +122,8 @@ export class UserController {
       required: ['currentPassword', 'newPassword', 'confirmNewPassword  '],
     },
   })
-  @ApiOkResponse({
-    status: HttpStatus.OK,
+  @ApiNoContentResponse({
+    status: HttpStatus.NO_CONTENT,
     description: 'User password updated successfully',
   })
   @ApiNotFoundResponse({
@@ -139,7 +138,7 @@ export class UserController {
     return this.updatePassword.execute(id, data);
   }
 
-  @Delete('delete/:id')
+  @Delete('/:id')
   @UseGuards(AuthGuard)
   @ApiOperation({ summary: 'Delete a user' })
   @ApiNoContentResponse({

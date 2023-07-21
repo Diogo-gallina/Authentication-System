@@ -104,7 +104,7 @@ describe('UserController (E2E)', () => {
         confirmNewPassword: 'new-password',
       };
 
-      updatePasswordUseCaseMock.execute.mockResolvedValueOnce({}); // Return a resolved promise (empty response)
+      updatePasswordUseCaseMock.execute.mockResolvedValueOnce({});
 
       const response = await request(app.getHttpServer())
         .patch(`/user/update-password/${userId}`)
@@ -119,14 +119,23 @@ describe('UserController (E2E)', () => {
     });
   });
 
-  describe('/user/delete/:id (DELETE)', () => {
+  describe('/user/:id (DELETE)', () => {
     it('should delete a user', async () => {
       const userId = 'user-id';
 
-      softDeleteUserUseCaseMock.execute.mockResolvedValueOnce({}); // Return a resolved promise (empty response)
+      softDeleteUserUseCaseMock.execute.mockResolvedValueOnce({});
+
+      const mockUser = {
+        id: userId,
+        name: 'John Doe',
+        email: 'johndoe@example.com',
+        deleted: false,
+      };
+
+      listUsersUseCaseMock.execute.mockResolvedValueOnce(mockUser);
 
       const response = await request(app.getHttpServer())
-        .delete(`/user/delete/${userId}`)
+        .delete(`/user/${userId}`)
         .expect(HttpStatus.NO_CONTENT);
 
       expect(response.status).toBe(HttpStatus.NO_CONTENT);
