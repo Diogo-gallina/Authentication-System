@@ -39,7 +39,7 @@ export class UserController {
   ) {}
 
   @Post('create')
-  @ApiOperation({ summary: 'Create a new user' })
+  @ApiOperation({ summary: 'Create an new user' })
   @ApiBody({
     schema: {
       type: 'object',
@@ -91,7 +91,7 @@ export class UserController {
 
   @Get('/:id')
   @UseGuards(AuthGuard)
-  @ApiOperation({ summary: 'Find a user by ID' })
+  @ApiOperation({ summary: 'Find an user by ID' })
   @ApiOkResponse({
     status: HttpStatus.OK,
     description: 'User found successfully',
@@ -140,7 +140,7 @@ export class UserController {
 
   @Delete('/:id')
   @UseGuards(AuthGuard)
-  @ApiOperation({ summary: 'Delete a user' })
+  @ApiOperation({ summary: 'Delete an user' })
   @ApiNoContentResponse({
     status: HttpStatus.NO_CONTENT,
     description: 'User deleted successfully',

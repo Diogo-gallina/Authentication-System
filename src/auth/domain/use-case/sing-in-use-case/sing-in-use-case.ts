@@ -41,7 +41,7 @@ export class SingInUseCase {
   private async generateRefreshToken(): Promise<string> {
     const refreshTokenPayload = { tokenType: 'refresh' };
     const refreshToken = await this.jwtService.signAsync(refreshTokenPayload, {
-      expiresIn: '60s',
+      expiresIn: '1d',
     });
 
     return refreshToken;

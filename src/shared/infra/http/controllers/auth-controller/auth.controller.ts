@@ -20,7 +20,7 @@ export class AuthController {
   ) {}
 
   @Post()
-  @ApiOperation({ summary: 'Create a new user' })
+  @ApiOperation({ summary: 'Login an user' })
   @ApiBody({
     schema: {
       type: 'object',
