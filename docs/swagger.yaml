@@ -1,4 +1,44 @@
 swagger: "2.0"
 info:
   version: "1.0.0"
-  title: "Authentication System"
+  title: "Token API"
+basePath: "http://localhost:3030" 
+
+paths:
+  /session/refresh:
+    patch:
+      summary: "Refresh Access Token"
+      description: "Refreshes the access token using the provided refresh token."
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+        - name: refreshToken
+          in: body
+          description: "Refresh token to obtain a new access token."
+          required: true
+          schema:
+            $ref: "#/definitions/RefreshTokenDto"
+      responses:
+        200:
+          description: "Successful token refresh."
+          schema:
+            $ref: "#/definitions/AccessTokenResponse"
+        404:
+          description: "Invalid refresh token."
+
+definitions:
+  RefreshTokenDto:
+    type: object
+    properties:
+      refreshToken:
+        type: string
+        example: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlblR5cGUiOiJyZWZyZXNoIiwiaWF0IjoxNjg5ODgwNTQyLCJleHAiOjE2ODk4ODA2MDJ9.pvb_akzcwmjSrz_DPsb_cLu0uUqHD6RIVEy_beau9TI"
+
+  AccessTokenResponse:
+    type: object
+    properties:
+      accessToken:
+        type: string
+        example: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIwNjNkMmMwNy03ZTdkLTRlYTUtOWJmYi03MWY3YTU4Y2MwNjkiLCJlbWFpbCI6InJpY2FyZG8uZGlhc0BnbWFpbC5jb20iLCJpYXQiOjE2ODk4OTU4NDUsImV4cCI6MTY4OTg5NTkwNX0.dsHI_4aGu8pLcBk978gkYD99WzcKQgkdmE4ziD2SRPE"

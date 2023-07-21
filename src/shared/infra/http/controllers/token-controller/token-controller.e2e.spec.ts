@@ -1,40 +1,64 @@
-import { Test } from '@nestjs/testing';
-import { TokenController } from './token-controller';
-import { RefreshTokenUseCase } from '@/token/domain/use-cases';
-import { RefreshTokenDto } from '@/token/domain/dtos';
+import { HttpStatus, HttpException } from '@nestjs/common';
+import { Test, TestingModule } from '@nestjs/testing';
 
-describe('TokenController', () => {
-  let controller: TokenController;
+import { TokenController } from '@/shared/infra/http/controllers/token-controller/token-controller';
+import { RefreshTokenUseCase } from '@/token/domain/use-cases';
+import { TokenModule } from '@/token/token.module';
+import { RefreshTokenDto } from '@/token/domain/dtos/refresh-token-dto';
+
+describe('TokenController (E2E)', () => {
+  let app: TestingModule;
+  let tokenController: TokenController;
   let refreshTokenUseCase: RefreshTokenUseCase;
 
-  beforeEach(async () => {
-    const moduleRef = await Test.createTestingModule({
-      controllers: [TokenController],
-      providers: [
-        {
-          provide: RefreshTokenUseCase,
-          useValue: {
-            execute: jest.fn(),
-          },
-        },
-      ],
+  beforeAll(async () => {
+    app = await Test.createTestingModule({
+      imports: [TokenModule],
     }).compile();
 
-    controller = moduleRef.get<TokenController>(TokenController);
-    refreshTokenUseCase =
-      moduleRef.get<RefreshTokenUseCase>(RefreshTokenUseCase);
+    tokenController = app.get<TokenController>(TokenController);
+    refreshTokenUseCase = app.get<RefreshTokenUseCase>(RefreshTokenUseCase);
   });
 
-  describe('refreshToken', () => {
-    it('should call the RefreshTokenUseCase with the provided data', async () => {
+  afterAll(async () => {
+    await app.close();
+  });
+
+  describe('/session/refresh (PATCH)', () => {
+    it('should return a new access token upon successful refresh', async () => {
       const refreshTokenDto: RefreshTokenDto = {
-        refreshToken:
-          'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlblR5cGUiOiJyZWZyZXNoIiwiaWF0IjoxNjg5ODgwNTQyLCJleHAiOjE2ODk4ODA2MDJ9.pvb_akzcwmjSrz_DPsb_cLu0uUqHD6RIVEy_beau9TI',
+        refreshToken: 'valid-refresh-token',
       };
 
-      await controller.refreshToken(refreshTokenDto);
+      jest
+        .spyOn(refreshTokenUseCase, 'execute')
+        .mockImplementation(async () => ({ accessToken: 'new-access-token' }));
 
-      expect(refreshTokenUseCase.execute).toHaveBeenCalledWith(refreshTokenDto);
+      const result = await tokenController.refreshToken(refreshTokenDto);
+
+      expect(result).toBeDefined();
+      expect(result.accessToken).toBe('new-access-token');
+    });
+
+    it('should handle invalid refresh token', async () => {
+      const refreshTokenDto: RefreshTokenDto = {
+        refreshToken: 'invalid-refresh-token',
+      };
+
+      jest
+        .spyOn(refreshTokenUseCase, 'execute')
+        .mockRejectedValue(
+          new HttpException('Invalid refresh token', HttpStatus.NOT_FOUND),
+        );
+
+      let result;
+      try {
+        result = await tokenController.refreshToken(refreshTokenDto);
+      } catch (error) {
+        expect(error.message).toBe('Invalid refresh token');
+        expect(error.status).toBe(HttpStatus.NOT_FOUND);
+      }
+      expect(result).toBeUndefined();
     });
   });
 });

@@ -1,18 +1,16 @@
-// jest-e2e.json
-{
-  "moduleFileExtensions": ["ts", "tsx", "js", "jsx", "json", "node"],
-  "moduleNameMapper": {
-    "^@/(.*)$": "<rootDir>/$1",
-    // Add other moduleNameMapper entries if necessary
+module.exports = {
+  moduleFileExtensions: ['ts', 'tsx', 'js', 'jsx', 'json', 'node'],
+  moduleNameMapper: {
+    '^@/(.*)$': '<rootDir>/$1',
   },
-  "rootDir": ".",
-  "testRegex": ".*\\.spec\\.ts$",
-  "transform": {
-    "^.+\\.(t|j)s$": "ts-jest"
+  rootDir: 'src',
+  testRegex: '.*\\.spec\\.ts$',
+  transform: {
+    '^.+\\.(t|j)s$': 'ts-jest',
   },
-  "collectCoverage": true,
-  "collectCoverageFrom": ["**/*.(t|j)s", "!**/node_modules/**"],
-  "coverageDirectory": "./coverage",
-  "testEnvironment": "node",
-  "preset": "ts-jest"
-}
+  collectCoverage: true,
+  collectCoverageFrom: ['**/*.ts', '!**/node_modules/**', '!**/*.spec.ts'],
+  coverageDirectory: '../coverage',
+  testEnvironment: 'node',
+  preset: 'ts-jest',
+};
