@@ -4,6 +4,7 @@ import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { ITokenRepository } from '@/token/domain/interfaces';
 import { User } from '@prisma/client';
 import { ERROR_WHEN_GENERATING_TOKEN } from '@/shared/constants/errors';
+import { SingInUseCaseDto } from '../../dtos';
 
 @Injectable()
 export class SingInUseCase {
@@ -12,10 +13,7 @@ export class SingInUseCase {
     private jwtService: JwtService,
   ) {}
 
-  async execute(user: User): Promise<{
-    accessToken: string;
-    refreshToken: string;
-  }> {
+  async execute(user: User): Promise<SingInUseCaseDto> {
     try {
       const payload = { sub: user.id, email: user.email };
       const token = await this.jwtService.signAsync(payload);
