@@ -7,8 +7,19 @@ import {
   Param,
   Patch,
   UseGuards,
+  HttpStatus,
 } from '@nestjs/common';
-
+import {
+  ApiBody,
+  ApiCreatedResponse,
+  ApiNoContentResponse,
+  ApiNotFoundResponse,
+  ApiOkResponse,
+  ApiOperation,
+  ApiResponse,
+  ApiTags,
+  ApiUnauthorizedResponse,
+} from '@nestjs/swagger';
 import {
   SoftDeleteUserUseCase,
   ListUsersUseCase,
@@ -18,6 +29,7 @@ import {
 import { RegisterUserDto, UpdatePasswordDTO } from '@/users/domain/dtos';
 import { AuthGuard } from '@/shared/guards/auth.guard';
 
+@ApiTags('user')
 @Controller('user')
 export class UserController {
   constructor(
@@ -28,27 +40,120 @@ export class UserController {
   ) {}
 
   @Post('create')
-  create(
-    @Body()
-    data: RegisterUserDto,
-  ) {
+  @ApiOperation({ summary: 'Create a new user' })
+  @ApiBody({
+    schema: {
+      type: 'object',
+      properties: {
+        name: { type: 'string', example: 'User Name' },
+        email: { type: 'string', example: 'user@example.com' },
+        password: { type: 'string', example: 'gcb123' },
+      },
+      required: ['name', 'email', 'password'],
+    },
+  })
+  @ApiCreatedResponse({
+    status: HttpStatus.CREATED,
+    description: 'User created successfully',
+    schema: {
+      type: 'object',
+      properties: {
+        id: {
+          type: 'string',
+          example: 'ee6891a0-d199-480d-8c20-3f423e08d810',
+        },
+        name: {
+          type: 'string',
+          example: 'Rodrigo Garcia',
+        },
+        email: {
+          type: 'string',
+          example: 'rodrigogarcia@example.com',
+        },
+        password: {
+          type: 'string',
+          example:
+            '$2b$08$rK8Z2P5nfhA25Z401CkmD.3/Yurd/qoVdBiAWXdWlmQJIHLf7D4Da',
+        },
+        deleted: {
+          type: 'boolean',
+          example: false,
+        },
+        created_at: {
+          type: 'timestamp',
+          example: '2023-03-29T00:02:05.494Z',
+        },
+      },
+    },
+  })
+  create(@Body() data: RegisterUserDto) {
     return this.registerUser.execute(data);
   }
 
-  @Get('list-one/:id')
+  @Get('/:id')
   @UseGuards(AuthGuard)
+  @ApiOperation({ summary: 'Find a user by ID' })
+  @ApiOkResponse({
+    status: HttpStatus.OK,
+    description: 'User found successfully',
+  })
+  @ApiNotFoundResponse({
+    status: HttpStatus.NOT_FOUND,
+    description: 'User not found',
+  })
+  @ApiUnauthorizedResponse({
+    status: HttpStatus.UNAUTHORIZED,
+    description: 'Unauthorized',
+  })
   findOne(@Param('id') id: string) {
     return this.listUser.execute(id);
   }
 
   @Patch('update-password/:id')
   @UseGuards(AuthGuard)
+  @ApiOperation({ summary: "Update a user's password" })
+  @ApiBody({
+    schema: {
+      type: 'object',
+      properties: {
+        currentPassword: { type: 'string', example: '@Vmf11022004' },
+        newPassword: { type: 'string', example: '@asdASD12312' },
+        confirmNewPassword: { type: 'string', example: '@asdASD12312' },
+      },
+      required: ['currentPassword', 'newPassword', 'confirmNewPassword  '],
+    },
+  })
+  @ApiOkResponse({
+    status: HttpStatus.OK,
+    description: 'User password updated successfully',
+  })
+  @ApiNotFoundResponse({
+    status: HttpStatus.NOT_FOUND,
+    description: 'User not found',
+  })
+  @ApiUnauthorizedResponse({
+    status: HttpStatus.UNAUTHORIZED,
+    description: 'Unauthorized',
+  })
   updateUser(@Param('id') id: string, @Body() data: UpdatePasswordDTO) {
     return this.updatePassword.execute(id, data);
   }
 
   @Delete('delete/:id')
   @UseGuards(AuthGuard)
+  @ApiOperation({ summary: 'Delete a user' })
+  @ApiNoContentResponse({
+    status: HttpStatus.NO_CONTENT,
+    description: 'User deleted successfully',
+  })
+  @ApiNotFoundResponse({
+    status: HttpStatus.NOT_FOUND,
+    description: 'User not found',
+  })
+  @ApiUnauthorizedResponse({
+    status: HttpStatus.UNAUTHORIZED,
+    description: 'Unauthorized',
+  })
   remove(@Param('id') id: string) {
     return this.deleteUser.execute(id);
   }
