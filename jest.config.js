@@ -9,7 +9,12 @@ module.exports = {
     '^.+\\.(t|j)s$': 'ts-jest',
   },
   collectCoverage: true,
-  collectCoverageFrom: ['**/*.ts', '!**/node_modules/**', '!**/*.spec.ts'],
+  collectCoverageFrom: [
+    '**/*.ts',
+    '!**/node_modules/**',
+    '!**/*.spec.ts',
+    '!**/index.ts',
+  ],
   coverageDirectory: '../coverage',
   testEnvironment: 'node',
   preset: 'ts-jest',
