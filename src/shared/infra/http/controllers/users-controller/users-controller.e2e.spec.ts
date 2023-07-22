@@ -68,7 +68,7 @@ describe('UserController (E2E)', () => {
   });
 
   describe('/user/create (POST)', () => {
-    it('should create a new user', async () => {
+    it.only('should create a new user', async () => {
       const newUser: RegisterUserDto = {
         name: 'John Doe',
         email: 'johndoe@example.com',

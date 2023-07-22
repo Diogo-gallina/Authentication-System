@@ -1,7 +1,10 @@
 import { compare } from 'bcryptjs';
 import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 
-import { INVALID_CREDENTIALS_ERROR } from '@/shared/constants/errors';
+import {
+  INVALID_CREDENTIALS_ERROR,
+  USER_DOES_NOT_EXIST,
+} from '@/shared/constants/errors';
 import { IUsersRepository } from '@/users/domain/interfaces';
 import { SingInDto } from '../../dtos';
 
@@ -11,6 +14,9 @@ export class ValidateUserUseCase {
 
   async execute({ email, password }: SingInDto) {
     const user = await this.usersRepository.findByEmail(email);
+
+    if (!user || user.deleted)
+      throw new HttpException(USER_DOES_NOT_EXIST, HttpStatus.NOT_FOUND);
 
     if (!user)
       throw new HttpException(
