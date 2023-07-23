@@ -1,6 +1,7 @@
 import { HttpException, HttpStatus, INestApplication } from '@nestjs/common';
 import { Test, TestingModule } from '@nestjs/testing';
 import * as request from 'supertest';
+
 import { AuthModule } from '@/auth/auth.module';
 import { SingInUseCase } from '@/auth/domain/use-case/sing-in-use-case/sing-in-use-case';
 import { SingInDto } from '@/auth/domain/dtos';
