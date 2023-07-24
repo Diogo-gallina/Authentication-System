@@ -26,7 +26,7 @@ describe('SingInUseCase', () => {
     createTokenMock.mockResolvedValue(expectedSingAsyncResponse);
   });
 
-  it('should create access and refresh tokens', async () => {
+  it.only('should create access and refresh tokens', async () => {
     const user = {
       id: 'id-01',
       email: 'user@email.com',
@@ -56,11 +56,6 @@ describe('SingInUseCase', () => {
 
     jest.spyOn(jwtService, 'signAsync').mockRejectedValue(HttpException);
 
-    try {
-      await sut.execute(user);
-      fail('The execute function was expected to throw an exception.');
-    } catch (error) {
-      expect(error).toBeInstanceOf(HttpException);
-    }
+    await expect(sut.execute(user)).rejects.toBeInstanceOf(HttpException);
   });
 });

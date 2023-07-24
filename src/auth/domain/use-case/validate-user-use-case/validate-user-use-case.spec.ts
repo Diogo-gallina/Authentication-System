@@ -40,38 +40,34 @@ describe('ValidateUserUseCase', () => {
     expect(result).toBe(user);
   });
 
-  it('Should throw an exception if the password is different from the users password', async () => {
-    try {
-      const userPasswordHash = await hash('@abc123ABC', 6);
+  it('Should throw an exception if the password is different from the user password', async () => {
+    const userPasswordHash = await hash('@abc123ABC', 6);
 
-      const user = await usersRepository.create({
-        id: 'id-01',
-        email: 'user@email.com',
-        name: 'user',
-        password_hash: userPasswordHash,
-        created_at: new Date(),
-        deleted: false,
-      });
+    const user = await usersRepository.create({
+      id: 'id-01',
+      email: 'user@email.com',
+      name: 'user',
+      password_hash: userPasswordHash,
+      created_at: new Date(),
+      deleted: false,
+    });
 
-      const userEmail = user.email;
+    const userEmail = user.email;
 
-      await sut.execute({
+    await expect(
+      sut.execute({
         email: userEmail,
         password: 'wrongPassword',
-      });
-    } catch (error) {
-      expect(error).toBeInstanceOf(HttpException);
-    }
+      }),
+    ).rejects.toBeInstanceOf(HttpException);
   });
 
-  it('Should throw an exception if the user doesnt exist', async () => {
-    try {
-      await sut.execute({
+  it('Should throw an exception if the user does not exist', async () => {
+    await expect(
+      sut.execute({
         email: 'teste@teste',
         password: '@abc123ABC',
-      });
-    } catch (error) {
-      expect(error).toBeInstanceOf(HttpException);
-    }
+      }),
+    ).rejects.toBeInstanceOf(HttpException);
   });
 });
