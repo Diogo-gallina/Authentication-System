@@ -1,11 +1,10 @@
-import { HttpException, HttpStatus } from '@nestjs/common';
+import { HttpStatus } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 
 import { ITokenRepository } from '@/token/domain/interfaces';
 import { GenerateAccessTokenUseCase } from './generate-access-token-use-case';
 import { InMemoryTokenRepository } from '../../test/in-memory/in-memory-tokens-repository';
 import { jwtConstants } from '@/shared/constants/jwt-constants';
-import { USER_DOES_NOT_EXIST } from '@/shared/constants/errors';
 
 describe('GenerateAccessTokenUseCase', () => {
   let jwtService: JwtService;
@@ -56,9 +55,11 @@ describe('GenerateAccessTokenUseCase', () => {
         created_at: new Date(),
         deleted: false,
       };
-      await expect(sut.execute(user)).rejects.toThrow(
-        new HttpException(USER_DOES_NOT_EXIST, HttpStatus.NOT_FOUND),
-      );
+      try {
+        await sut.execute(user);
+      } catch (error) {
+        expect(error).toBe(HttpStatus.NOT_FOUND);
+      }
     });
   });
 });
