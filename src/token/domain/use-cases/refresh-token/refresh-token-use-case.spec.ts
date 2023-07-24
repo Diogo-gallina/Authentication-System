@@ -14,7 +14,16 @@ describe('RefreshTokenUseCase', () => {
   let generateAccessTokenUseCase: GenerateAccessTokenUseCase;
   let refreshTokenUseCase: RefreshTokenUseCase;
 
+  let refreshTokenMock: jest.SpyInstance;
+  let expectedRefreshAsyncResponse: string;
+
+  beforeAll(() => {
+    expectedRefreshAsyncResponse = 'anyToken';
+    refreshTokenMock = jest.spyOn(JwtService.prototype, 'signAsync');
+  });
+
   beforeEach(() => {
+    refreshTokenMock.mockResolvedValue(expectedRefreshAsyncResponse);
     jwtService = new JwtService({
       secret: jwtConstants.secret,
     });
@@ -53,7 +62,7 @@ describe('RefreshTokenUseCase', () => {
         refreshToken: refreshToken,
       });
 
-      expect(newToken.accessToken).toEqual(expect.any(String));
+      expect(newToken.accessToken).toEqual(expectedRefreshAsyncResponse);
     });
   });
 
