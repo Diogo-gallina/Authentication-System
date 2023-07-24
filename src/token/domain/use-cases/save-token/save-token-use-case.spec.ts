@@ -20,7 +20,6 @@ describe('SaveTokenUseCase', () => {
 
     const savedToken = await tokenRepository.findExistingToken(userId);
 
-    expect(savedToken).toBeDefined();
     expect(savedToken?.accessToken).toBe(accessToken);
     expect(savedToken?.user_id).toBe(userId);
     expect(savedToken?.refreshToken).toBe(refreshToken);
