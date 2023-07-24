@@ -43,7 +43,6 @@ describe('RefreshTokenUseCase', () => {
       });
 
       const refreshToken = 'validRefreshToken';
-
       await tokenRepository.create({
         user_id: user.id,
         refreshToken: refreshToken,
@@ -60,32 +59,24 @@ describe('RefreshTokenUseCase', () => {
 
   describe('Fail Test', () => {
     it('should return an exception when there is no user', async () => {
-      try {
-        const refreshToken = 'validRefreshToken';
-        await tokenRepository.create({
-          user_id: 'invalid-id',
-          refreshToken: refreshToken,
-          accessToken: 'oldAccessToken',
-        });
+      const refreshToken = 'validRefreshToken';
+      await tokenRepository.create({
+        user_id: 'invalid-id',
+        refreshToken: refreshToken,
+        accessToken: 'oldAccessToken',
+      });
 
-        await refreshTokenUseCase.execute({
-          refreshToken: refreshToken,
-        });
-      } catch (error) {
-        expect(error).toBeInstanceOf(HttpException);
-      }
+      await expect(
+        refreshTokenUseCase.execute({ refreshToken }),
+      ).rejects.toBeInstanceOf(HttpException);
     });
 
-    it('should', async () => {
-      try {
-        const refreshToken = null;
+    it('should return an exception when refreshToken is null', async () => {
+      const refreshToken = null;
 
-        await refreshTokenUseCase.execute({
-          refreshToken: refreshToken,
-        });
-      } catch (error) {
-        expect(error).toBeInstanceOf(HttpException);
-      }
+      await expect(
+        refreshTokenUseCase.execute({ refreshToken }),
+      ).rejects.toBeInstanceOf(HttpException);
     });
   });
 });
