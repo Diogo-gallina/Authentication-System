@@ -10,8 +10,17 @@ describe('GenerateAccessTokenUseCase', () => {
   let jwtService: JwtService;
   let tokenRepository: ITokenRepository;
   let sut: GenerateAccessTokenUseCase;
+  let generateTokenMock: jest.SpyInstance;
+  let expectedGenerateAsyncResponse: string;
+
+  beforeAll(() => {
+    expectedGenerateAsyncResponse = 'anyToken';
+    generateTokenMock = jest.spyOn(JwtService.prototype, 'signAsync');
+  });
 
   beforeEach(() => {
+    generateTokenMock.mockResolvedValue(expectedGenerateAsyncResponse);
+
     jwtService = new JwtService({
       secret: jwtConstants.secret,
     });
@@ -32,7 +41,7 @@ describe('GenerateAccessTokenUseCase', () => {
 
       const generateToken = await sut.execute(user);
 
-      expect(generateToken.accessToken).toEqual(expect.any(String));
+      expect(generateToken.accessToken).toEqual(expectedGenerateAsyncResponse);
     });
   });
 
