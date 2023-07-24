@@ -53,7 +53,8 @@ describe('Update Password Use Case', () => {
         newPassword,
         confirmNewPassword: newPassword,
       }),
-    ).rejects.toThrow(HttpException);
+    ).rejects.toBeInstanceOf(HttpException);
+
     await expect(
       sut.execute(user.id, {
         currentPassword: 'incorrectPassword',
@@ -82,7 +83,8 @@ describe('Update Password Use Case', () => {
         newPassword,
         confirmNewPassword,
       }),
-    ).rejects.toThrow(HttpException);
+    ).rejects.toBeInstanceOf(HttpException);
+
     await expect(
       sut.execute(user.id, {
         currentPassword: originalPassword,
