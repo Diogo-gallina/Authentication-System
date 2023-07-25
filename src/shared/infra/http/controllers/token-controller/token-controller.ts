@@ -1,5 +1,3 @@
-import { RefreshTokenDto } from '@/token/domain/dtos/refresh-token-dto';
-import { RefreshTokenUseCase } from '@/token/domain/use-cases';
 import { Body, Controller, HttpStatus, Patch } from '@nestjs/common';
 import {
   ApiOperation,
@@ -8,6 +6,9 @@ import {
   ApiTags,
   ApiCreatedResponse,
 } from '@nestjs/swagger';
+
+import { RefreshTokenDto } from '@/token/domain/dtos/refresh-token-dto';
+import { RefreshTokenUseCase } from '@/token/domain/use-cases';
 
 @ApiTags('Token')
 @Controller('session')

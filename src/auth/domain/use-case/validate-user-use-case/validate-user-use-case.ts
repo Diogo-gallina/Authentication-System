@@ -27,10 +27,7 @@ export class ValidateUserUseCase {
     const doesPasswordMatches = await compare(password, user.password_hash);
 
     if (!doesPasswordMatches)
-      throw new HttpException(
-        INVALID_CREDENTIALS_ERROR,
-        HttpStatus.UNAUTHORIZED,
-      );
+      throw new HttpException(INVALID_CREDENTIALS_ERROR, HttpStatus.FORBIDDEN);
 
     return user;
   }
