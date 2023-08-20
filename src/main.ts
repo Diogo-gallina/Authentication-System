@@ -10,7 +10,7 @@ async function bootstrap() {
 
   const config = new DocumentBuilder()
     .setTitle('Authentication-System')
-    .setDescription('Authentication System')
+    .setDescription('Authentication System!')
     .setVersion('1.0')
     .build();
 
